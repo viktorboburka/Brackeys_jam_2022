@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class GravityControl : MonoBehaviour
 {
-    public float terminalVelocity = 10.0f;
-    public float gravityScale = 3.0f;
+    public float _terminalVelocity = 10.0f;
+    public float _gravityScale = 3.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Physics2D.gravity *= gravityScale;
+        Physics2D.gravity *= _gravityScale;
         GameObject[] allRigidBodyObjects = GameObject.FindObjectsOfType(typeof (GameObject)) as GameObject[];
         foreach( GameObject go in allRigidBodyObjects) {
             Debug.Log(go.ToString());
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
-            rb.drag = GetDragFromAcceleration(Physics.gravity.magnitude, terminalVelocity);
+            rb.drag = GetDragFromAcceleration(Physics.gravity.magnitude, _terminalVelocity);
         }
     }
 
