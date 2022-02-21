@@ -1,0 +1,17 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+[*.cs]
+insert_final_newline = true
+# do not warn about unused Update etc. Also doubles as typo check, because if
+# there is a typo it will warn that method is unused :-)
+roslynator.RCS1213.suppress_unity_script_methods = true
+trim_trailing_whitespace = false
