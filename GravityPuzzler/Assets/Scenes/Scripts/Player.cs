@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Player : GravityInfluenced
 {
-    private int _speed = 130;
+    private float _acceleration = 130;
+    private float _accelerationAir = 20;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,7 +23,12 @@ public class Player : GravityInfluenced
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, 0) * _speed * Time.deltaTime;
-        
+
+        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.02f, ~(1 << 2));
+        if (hit) {
+            GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, 0) * _acceleration * Time.deltaTime;
+        } else {
+            GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, 0) * _accelerationAir * Time.deltaTime;
+        }
     }
 }
