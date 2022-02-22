@@ -5,11 +5,11 @@ using UnityEngine;
 public class Player : GravityInfluenced
 {
     private float _acceleration = 60;
-    private float _accelerationAir = 40;
+    private float _accelerationAir = 60;
     private string _gravityDir;
     private bool _isDead = false;
     private bool _survived = false;
-    private float maxSpeed = 15;
+    private float _maxSpeed = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +27,44 @@ public class Player : GravityInfluenced
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.02f, ~(1 << 2));
+        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
+
         Vector2 velVec;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         switch (_gravityDir)
         {
             case "down":
-                velVec = new Vector2(horizontalInput, 0);
+                if (Mathf.Abs(rb.velocity.x) < _maxSpeed) {
+                    velVec = new Vector2(horizontalInput, 0);
+                }
+                else {
+                    velVec = new Vector2(0, 0);
+                }
                 break;
             case "up":
-                velVec = new Vector2(-horizontalInput, 0);
+                if (Mathf.Abs(rb.velocity.x) < _maxSpeed) {
+                    velVec = new Vector2(-horizontalInput, 0);
+                }
+                else {
+                    velVec = new Vector2(0, 0);
+                }
                 break;
             case "left":
-                velVec = new Vector2(0, -horizontalInput);
+                if (Mathf.Abs(rb.velocity.y) < _maxSpeed) {
+                    velVec = new Vector2(0, -horizontalInput);
+                }
+                else {
+                    velVec = new Vector2(0, 0);
+                }
                 break;
             case "right":
-                velVec = new Vector2(0, horizontalInput);
+                if (Mathf.Abs(rb.velocity.y) < _maxSpeed) {
+                    velVec = new Vector2(0, horizontalInput);
+                }
+                else {
+                    velVec = new Vector2(0, 0);
+                }
+                
                 break;
             default:
                 velVec = new Vector2(horizontalInput, 0);
@@ -50,18 +73,12 @@ public class Player : GravityInfluenced
         if (_isDead) {
             velVec = new Vector2(0, 0);
         }
-            if (hit)
-            {
-                if (GetComponent<Rigidbody2D>().velocity.magnitude < maxSpeed) {
-                    GetComponent<Rigidbody2D>().velocity += velVec * _acceleration * Time.deltaTime;
-                }
-            }
-            else 
-            {
-                if (GetComponent<Rigidbody2D>().velocity.magnitude < maxSpeed) {
-                    GetComponent<Rigidbody2D>().velocity += velVec * _accelerationAir * Time.deltaTime;
-                }
-            }
+        if (hit) {
+            rb.velocity += velVec * _acceleration * Time.deltaTime;
+        }
+        else {
+            rb.velocity += velVec * _accelerationAir * Time.deltaTime;
+        }
     }
 
     public void rotateControls(string gravity) {
