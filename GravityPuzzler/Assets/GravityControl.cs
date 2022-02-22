@@ -29,7 +29,7 @@ public class GravityControl : MonoBehaviour
             gravChangesDone.Add(false);
         }
 
-        cameraControl = GameObject.Find("Main Camera").GetComponent<CameraControl>();
+        cameraControl = Camera.main.GetComponent<CameraControl>();//GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
     }
@@ -45,7 +45,12 @@ public class GravityControl : MonoBehaviour
             if (gravChangesDone[i]) {
                 continue;
             }
-            if (Time.time > gravChangeTimes[i]) {
+            float sumTime = 0.0f;
+            for(int j = 0; j < i; j++) {
+                sumTime += gravChangeTimes[j];
+            }
+
+            if (Time.time > sumTime) {
                 changeGravity(gravChanges[i]);
             }
         }
