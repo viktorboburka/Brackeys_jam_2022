@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class GravityControl : MonoBehaviour
 {
-    public float _terminalVelocity = 10.0f;
-    public float _gravityScale = 3.0f;
+    [SerializeField]
+    private float _terminalVelocity = 10.0f;
+    [SerializeField]
+    private float _gravityScale = 3.0f;
 
     private Dictionary<string, Vector2> _gravityVectors;
     private string _currentGravity = "down";
 
+    private CameraControl cameraControl;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
     {
+        cameraControl = GameObject.Find("Main Camera").GetComponent<CameraControl>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
     }
 
@@ -22,33 +28,39 @@ public class GravityControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
             changeGravity();
-            Debug.Log(Physics2D.gravity);
-            Debug.Log(_currentGravity);
+            //Debug.Log(Physics2D.gravity);
+            Debug.Log("gravity changed to: " + _currentGravity);
         }
     }
 
     void changeGravity() {
-        string gravStr = "down";
         switch (_currentGravity) {
             case "down":
-                gravStr = "left";
+                changeGravity("left"); //gravStr = "left";
                 break;
-            case "up":
-                gravStr = "right";
-                break;
+            /*case "up":
+                changeGravity("right"); //gravStr = "right";
+                break;*/
             case "left":
-                gravStr = "up";
+                changeGravity("right"); //gravStr = "up";
                 break;
             case "right":
-                gravStr = "down";
+                changeGravity("down"); //gravStr = "down";
+                break;
+            default:
+                changeGravity("down");
                 break;
         }
+    }
 
+    public void changeGravity(string changeTo) {
         Vector2 newGravity;
-        bool ret = _gravityVectors.TryGetValue(gravStr, out newGravity);
+        bool ret = _gravityVectors.TryGetValue(changeTo, out newGravity);
         if (ret) {
             Physics2D.gravity = newGravity * _gravityScale;
-            _currentGravity = gravStr;
+            _currentGravity = changeTo;
+            cameraControl.setTargetRotation(changeTo);
+            player.rotateControls(changeTo);
         }
     }
 
