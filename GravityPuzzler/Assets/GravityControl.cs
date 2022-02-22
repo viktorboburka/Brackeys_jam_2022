@@ -8,6 +8,12 @@ public class GravityControl : MonoBehaviour
     private float _terminalVelocity = 10.0f;
     [SerializeField]
     private float _gravityScale = 3.0f;
+    [SerializeField]
+    private List<string> gravChanges;
+    private int gravityChangesIdx = 0;
+    [SerializeField]
+    private List<float> gravChangeTimes;
+    private List<bool> gravChangesDone;
 
     private Dictionary<string, Vector2> _gravityVectors;
     private string _currentGravity = "down";
@@ -18,6 +24,11 @@ public class GravityControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gravChangesDone = new List<bool>();
+        for (int i = 0; i < gravChanges.Count; i++) {
+            gravChangesDone.Add(false);
+        }
+
         cameraControl = GameObject.Find("Main Camera").GetComponent<CameraControl>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
@@ -26,26 +37,40 @@ public class GravityControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            changeGravity();
-            //Debug.Log(Physics2D.gravity);
-            Debug.Log("gravity changed to: " + _currentGravity);
+        triggerTimedGravityChanges();
+    }
+
+    void triggerTimedGravityChanges() {
+        for (int i = 0; i < gravChanges.Count; i++) {
+            if (gravChangesDone[i]) {
+                continue;
+            }
+            if (Time.time > gravChangeTimes[i]) {
+                changeGravity(gravChanges[i]);
+            }
         }
     }
 
     void changeGravity() {
+        changeGravity(gravChanges[0]);
+        for (int i = 1; i < gravChanges.Count; i++) {
+            gravChanges[i - 1] = gravChanges[i];
+            gravChanges.RemoveAt(gravChanges.Count - 1);
+        }
+        return;
+
         switch (_currentGravity) {
             case "down":
-                changeGravity("left"); //gravStr = "left";
+                changeGravity("left");
                 break;
             /*case "up":
-                changeGravity("right"); //gravStr = "right";
+                changeGravity("right");
                 break;*/
             case "left":
-                changeGravity("right"); //gravStr = "up";
+                changeGravity("right");
                 break;
             case "right":
-                changeGravity("down"); //gravStr = "down";
+                changeGravity("down");
                 break;
             default:
                 changeGravity("down");
