@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour {
     private Vector3 _currentRotation;
     private Vector3 _targetRotation;
     [SerializeField]
-    private float _rotationSpeed = 0.1f;
+    private float _rotationSpeed = 2f;
     private float _rotationChangedTime = 0.0f;
 
 
@@ -48,8 +48,7 @@ public class CameraControl : MonoBehaviour {
     public void smoothRotate() {
         Vector3 rotateTo = _currentRotation;
         rotateTo.z = Mathf.Lerp(_currentRotation.z, _targetRotation.z, (Time.time - _rotationChangedTime) * _rotationSpeed);
-        if (rotateTo - _currentRotation != new Vector3(0.0f, 0.0f, 0.0f)) 
-            Debug.Log("rotating by: " + (rotateTo - _currentRotation));
+        //if (rotateTo - _currentRotation != new Vector3(0.0f, 0.0f, 0.0f)) Debug.Log("rotating by: " + (rotateTo - _currentRotation));
         gameObject.transform.Rotate(rotateTo - _currentRotation);
         _currentRotation = rotateTo;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GravityControl : MonoBehaviour
 {
     [SerializeField]
-    private float _terminalVelocity = 10.0f;
+    private float _terminalVelocity = 5.0f;
     [SerializeField]
     private float _gravityScale = 3.0f;
     [SerializeField]
@@ -46,7 +46,7 @@ public class GravityControl : MonoBehaviour
                 continue;
             }
             float sumTime = 0.0f;
-            for(int j = 0; j < i; j++) {
+            for(int j = 0; j <= i; j++) {
                 sumTime += gravChangeTimes[j];
             }
 
@@ -56,32 +56,6 @@ public class GravityControl : MonoBehaviour
         }
     }
 
-    void changeGravity() {
-        changeGravity(gravChanges[0]);
-        for (int i = 1; i < gravChanges.Count; i++) {
-            gravChanges[i - 1] = gravChanges[i];
-            gravChanges.RemoveAt(gravChanges.Count - 1);
-        }
-        return;
-
-        switch (_currentGravity) {
-            case "down":
-                changeGravity("left");
-                break;
-            /*case "up":
-                changeGravity("right");
-                break;*/
-            case "left":
-                changeGravity("right");
-                break;
-            case "right":
-                changeGravity("down");
-                break;
-            default:
-                changeGravity("down");
-                break;
-        }
-    }
 
     public void changeGravity(string changeTo) {
         Vector2 newGravity;
@@ -109,7 +83,7 @@ public class GravityControl : MonoBehaviour
 
         GameObject[] allRigidBodyObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         foreach (GameObject go in allRigidBodyObjects) {
-            Debug.Log(go.ToString());
+            //Debug.Log(go.ToString());
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
             rb.drag = GetDragFromAcceleration(Physics.gravity.magnitude, _terminalVelocity);
