@@ -46,7 +46,7 @@ public class GravityControl : MonoBehaviour
                 continue;
             }
             float sumTime = 0.0f;
-            for(int j = 0; j < i; j++) {
+            for(int j = 0; j <= i; j++) {
                 sumTime += gravChangeTimes[j];
             }
 
@@ -109,7 +109,7 @@ public class GravityControl : MonoBehaviour
 
         GameObject[] allRigidBodyObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         foreach (GameObject go in allRigidBodyObjects) {
-            Debug.Log(go.ToString());
+            //Debug.Log(go.ToString());
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
             rb.drag = GetDragFromAcceleration(Physics.gravity.magnitude, _terminalVelocity);
