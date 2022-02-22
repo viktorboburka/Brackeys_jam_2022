@@ -8,6 +8,7 @@ public class Player : GravityInfluenced
     private float _accelerationAir = 20;
     private string _gravityDir;
     private bool _isDead = false;
+    private bool _survived = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,9 +77,21 @@ public class Player : GravityInfluenced
             Debug.Log("you are dead");
         }
     }
+
+
     public bool isDead()
     {
         return _isDead;
+    }
+
+    public void setSurvived(bool survived)
+    {
+        _survived = survived;
+    }
+
+    public bool survived()
+    {
+        return _survived;
     }
 }
 
