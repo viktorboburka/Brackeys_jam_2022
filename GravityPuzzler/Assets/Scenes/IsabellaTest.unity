@@ -226,7 +226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348413154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3294, y: 10.6229, z: 0}
+  m_LocalPosition: {x: -5.6, y: 10.8, z: 0}
   m_LocalScale: {x: 7.793463, y: 8.390103, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1198,7 +1198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773914684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4206, y: -2.1686, z: 0}
+  m_LocalPosition: {x: -0.6, y: -1.9, z: 0}
   m_LocalScale: {x: 7.9736676, y: 20.747042, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1582,6 +1582,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChanges.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChanges.Array.data[0]
+      value: down
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChanges.Array.data[1]
+      value: left
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChanges.Array.data[2]
+      value: right
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChangeTimes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChangeTimes.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChangeTimes.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: gravChangeTimes.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[0].duration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[1].duration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[2].duration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[0].direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[1].direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955290746496034013, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
+      propertyPath: _timeline.Array.data[2].direction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1955290746496034014, guid: 840106b3fb1367a46af6eba93cf33b4e, type: 3}
       propertyPath: m_Name
       value: GravityChanger
@@ -1595,6 +1655,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5518820843340722088, guid: 8a9a0e6bbcf5ad1458bc3733518be0cf, type: 3}
+      propertyPath: _rotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5518820843340722089, guid: 8a9a0e6bbcf5ad1458bc3733518be0cf, type: 3}
       propertyPath: m_RootOrder
       value: 0
