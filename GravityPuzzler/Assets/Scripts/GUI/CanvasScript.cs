@@ -9,11 +9,16 @@ public class CanvasScript : MonoBehaviour
     private GameObject _gameover;
     [SerializeField]
     private GameObject _complete;
+    [SerializeField]
+    private GameObject[] _memoryImages;
+
+    private int _memoriesCollected = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
     }
 
     // Update is called once per frame
@@ -26,6 +31,12 @@ public class CanvasScript : MonoBehaviour
         if(!_player.isDead() && _player.survived())
         {
             _complete.SetActive(true);
+        }
+        _memoriesCollected = _player.getSavedMemoryCount();
+        for (int i = 0; i < _memoryImages.Length; i++) {
+            if (i < _memoriesCollected) {
+                _memoryImages[i].SetActive(true);
+            }
         }
     }
 }

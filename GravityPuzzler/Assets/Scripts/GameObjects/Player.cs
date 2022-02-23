@@ -185,5 +185,9 @@ public class Player : GravityInfluenced {
         _savedMemories++;
     }
 
+    public int getSavedMemoryCount() {
+        return _savedMemories;
+    }
+
 }
 
