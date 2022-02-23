@@ -34,11 +34,18 @@ public class CanvasScript : MonoBehaviour {
         if (!_player.isDead() && _player.survived()) {
             _complete.SetActive(true);
         }
-        _memoriesCollected = _player.getSavedMemoryCount();
-        for (int i = 0; i < _memoryImages.Length; i++) {
-            if (i < _memoriesCollected) {
-                _memoryImages[i].SetActive(true);
+        if(!_player.isDead() && _player.getMemoryLeftCount() == 0 && _player.getSavedMemoryCount() > 0)
+        {
+            _complete.SetActive(true);
+            _memoriesCollected = _player.getSavedMemoryCount();
+            for (int i = 0; i < _memoryImages.Length; i++)
+            {
+                if (i < _memoriesCollected)
+                {
+                    _memoryImages[i].SetActive(true);
+                }
             }
         }
+        
     }
 }

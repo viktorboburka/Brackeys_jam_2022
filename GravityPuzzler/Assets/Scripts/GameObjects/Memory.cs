@@ -6,6 +6,8 @@ public class Memory : MonoBehaviour
 {
 
     private float _timeOfDeath = Mathf.Infinity;
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,20 +24,25 @@ public class Memory : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        Player player = other.gameObject.GetComponent<Player>();
         if (other.gameObject.tag == "KillerPlatform") {
             _timeOfDeath = Time.timeSinceLevelLoad;
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
+            player.reduceMemory();
             //TODO: play death animation
         }
         if (other.gameObject.tag == "Player") {
-            Player player = other.gameObject.GetComponent<Player>();
             player.savedMemory();
+            player.reduceMemory();
             _timeOfDeath = Time.timeSinceLevelLoad;
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
             //TODO: play save animation
         }
+        
     }
+
+    
 
 }

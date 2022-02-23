@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour {
     private Player player;
     private int sceneCount;
-
+    private Memory memory;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         sceneCount = SceneManager.sceneCountInBuildSettings;
+        memory = GameObject.FindGameObjectWithTag("Memory").GetComponent<Memory>();
     }
 
     // Update is called once per frame
@@ -38,5 +39,22 @@ public class SceneSwitcher : MonoBehaviour {
                 SceneManager.LoadScene(nextScene);
             }
         }
+
+        if ((player.getMemoryLeftCount() == 0) && !player.isDead() && Input.GetKey(KeyCode.Return))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            int index = scene.buildIndex;
+            int nextScene = index + 1;
+            if (nextScene >= sceneCount)
+            {
+                return;
+            }
+            else
+            {
+                SceneManager.LoadScene(nextScene);
+            }
+        }
+
+
     }
 }

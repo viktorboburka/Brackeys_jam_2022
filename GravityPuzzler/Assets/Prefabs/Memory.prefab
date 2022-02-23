@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8485952990288476195}
   m_Layer: 0
   m_Name: Memory
-  m_TagString: Untagged
+  m_TagString: Memory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c06cc9a96dab247a19c6d57ed35bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfMemoriesLeft: 0
 --- !u!61 &8485952990288476195
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -11,12 +11,12 @@ public class Player : GravityInfluenced {
     private float _maxSpeed = 10;
     private float _deccelerationMultiplier = 2f;
     private float _deccelerationIdleMultiplier = 0.1f;
-
     private bool _isDead = false;
     private bool _survived = false;
     private float _timeOfDeath = Mathf.Infinity;
-
     private int _savedMemories = 0;
+    [SerializeField]
+    private int _numberOfMemoriesLeft;
 
     // Start is called before the first frame update
     void Start()
@@ -185,8 +185,18 @@ public class Player : GravityInfluenced {
         _savedMemories++;
     }
 
+    public void reduceMemory()
+    {
+        _numberOfMemoriesLeft--;
+    }
+
     public int getSavedMemoryCount() {
         return _savedMemories;
+    }
+
+    public int getMemoryLeftCount()
+    {
+        return _numberOfMemoriesLeft;
     }
 
 }
