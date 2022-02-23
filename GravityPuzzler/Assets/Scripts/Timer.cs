@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-
-public class Timer : MonoBehaviour
-{
+public class Timer : MonoBehaviour {
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
     [SerializeField]
@@ -19,18 +18,18 @@ public class Timer : MonoBehaviour
     }
     void Update()
     {
-        if (timerIsRunning)
-        {
-            if (timeRemaining > 0)
-            {
+        if (timerIsRunning) {
+            if (timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
                 player.setSurvived(true);
+                PersistentData.Update(data => {
+                    var scene = SceneManager.GetActiveScene().buildIndex;
+                    data.lastLevel = System.Math.Max(scene + 1, data.lastLevel);
+                });
             }
             if (timeRemaining < 0) {
                 timeRemaining = 0;
