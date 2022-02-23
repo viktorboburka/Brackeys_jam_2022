@@ -6,8 +6,8 @@ public class GravityControl : MonoBehaviour {
     public enum GravityDirection {
         DOWN,
         LEFT,
-        RIGHT,
         UP,
+        RIGHT,
     }
     [System.Serializable]
     public class GravityChange {
@@ -64,10 +64,9 @@ public class GravityControl : MonoBehaviour {
         if (_gravityVectors.TryGetValue(changeTo, out var newGravity))
         {
             Physics2D.gravity = newGravity * _gravityScale;
-            // TODO: change other scripts to use GravityDirection too
-            string stringified = changeTo.ToString().ToLower();
-            cameraControl.setTargetRotation(stringified);
-            player.rotateControls(stringified);
+            cameraControl.setTargetRotation(changeTo);
+            player.changeDirection(_timeline[timelineIndex].direction);
+            player.rotateControls(changeTo);
         }
     }
 

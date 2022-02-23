@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : GravityInfluenced
-{
-    private float _acceleration = 60;
-    private float _accelerationAir = 60;
-    private string _gravityDir;
-    private float _maxSpeed = 15;
+public class Player : GravityInfluenced {
+
+    private GravityControl.GravityDirection _gravityDir;
+
+    private float _acceleration = 150;
+    private float _accelerationAir = 150;
+    private float _maxSpeed = 10;
+    private float _deccelerationMultiplier = 2f;
+    private float _deccelerationIdleMultiplier = 0.1f;
 
     private bool _isDead = false;
     private bool _survived = false;
@@ -33,40 +36,84 @@ public class Player : GravityInfluenced
 
     void calculateMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
         var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
+        //Debug.Log(horizontalInput);
 
+        
         Vector2 velVec;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         switch (_gravityDir)
         {
-            case "down":
+            case GravityControl.GravityDirection.DOWN:
+                //slow down when there is no input
+                if (horizontalInput == 0f) {
+                    velVec = new Vector2(-rb.velocity.x * _deccelerationIdleMultiplier, 0f);
+                    break;
+                }
+
+                //accelerate if not at max speed, decceleration is faster
                 if (Mathf.Abs(rb.velocity.x) < _maxSpeed) {
                     velVec = new Vector2(horizontalInput, 0);
+                    if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(velVec.x)) {
+                        velVec *= _deccelerationMultiplier;
+                    }
                 }
                 else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
-            case "up":
+            case GravityControl.GravityDirection.UP:
+
+                //slow down when there is no input
+                if (horizontalInput == 0f) {
+                    velVec = new Vector2(-rb.velocity.x * _deccelerationIdleMultiplier, 0f);
+                    break;
+                }
+
+                //accelerate if not at max speed, decceleration is faster
                 if (Mathf.Abs(rb.velocity.x) < _maxSpeed) {
                     velVec = new Vector2(-horizontalInput, 0);
+                    if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(velVec.x)) {
+                        velVec *= _deccelerationMultiplier;
+                    }
                 }
                 else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
-            case "left":
+            case GravityControl.GravityDirection.LEFT:
+
+                //slow down when there is no input
+                if (horizontalInput == 0f) {
+                    velVec = new Vector2(0f, -rb.velocity.y * _deccelerationIdleMultiplier);
+                    break;
+                }
+
+                //accelerate if not at max speed, decceleration is faster
                 if (Mathf.Abs(rb.velocity.y) < _maxSpeed) {
                     velVec = new Vector2(0, -horizontalInput);
+                    if (Mathf.Sign(rb.velocity.y) != Mathf.Sign(velVec.y)) {
+                        velVec *= _deccelerationMultiplier;
+                    }
                 }
                 else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
-            case "right":
+            case GravityControl.GravityDirection.RIGHT:
+                //slow down when there is no input
+                if (horizontalInput == 0f) {
+                    velVec = new Vector2(0f, -rb.velocity.y * _deccelerationIdleMultiplier);
+                    break;
+                }
+
+                //accelerate if not at max speed, decceleration is faster
                 if (Mathf.Abs(rb.velocity.y) < _maxSpeed) {
                     velVec = new Vector2(0, horizontalInput);
+                    if (Mathf.Sign(rb.velocity.y) != Mathf.Sign(velVec.y)) {
+                        velVec *= _deccelerationMultiplier;
+                    }
                 }
                 else {
                     velVec = new Vector2(0, 0);
@@ -77,6 +124,7 @@ public class Player : GravityInfluenced
                 velVec = new Vector2(horizontalInput, 0);
                 break;
         }
+
         if (_isDead) {
             velVec = new Vector2(0, 0);
         }
@@ -88,7 +136,20 @@ public class Player : GravityInfluenced
         }
     }
 
-    public void rotateControls(string gravity) {
+    public void changeDirection(GravityControl.GravityDirection dir) {
+        float [,] anglesBetweenDir = new float[4, 4] {
+            {0, -90, 180, 90},
+            {90, 0, -90, 180},
+            {180, 90, 0, -90},
+            {-90, 180, 90, 0}
+        };
+
+        float rotation = anglesBetweenDir[(int) _gravityDir, (int) dir];
+        //Debug.Log(rotation);
+        gameObject.transform.Rotate(new Vector3(0, 0, rotation));
+    }
+
+    public void rotateControls(GravityControl.GravityDirection gravity) {
         _gravityDir = gravity;
     }
    
