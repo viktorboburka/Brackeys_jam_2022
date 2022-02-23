@@ -136,7 +136,7 @@ public class Player : GravityInfluenced {
         }
     }
 
-    public void changeDirection(GravityControl.GravityDirection dir) {
+    public void changeDirection(GravityControl.GravityDirection targetDir) {
         float [,] anglesBetweenDir = new float[4, 4] {
             {0, -90, 180, 90},
             {90, 0, -90, 180},
@@ -144,8 +144,7 @@ public class Player : GravityInfluenced {
             {-90, 180, 90, 0}
         };
 
-        float rotation = anglesBetweenDir[(int) _gravityDir, (int) dir];
-        //Debug.Log(rotation);
+        float rotation = anglesBetweenDir[(int) _gravityDir, (int) targetDir];
         gameObject.transform.Rotate(new Vector3(0, 0, rotation));
     }
 
