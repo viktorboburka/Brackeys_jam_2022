@@ -33,6 +33,7 @@ public class Timer : MonoBehaviour
                 player.setSurvived(true);
             }
         }
+        //Debug.Log(timeRemaining);
         DisplayTime(timeRemaining);
     }
 

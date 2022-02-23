@@ -19,7 +19,7 @@ public class CanvasScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_player.isDead())
+        if (_player.isDead() && !_player.survived())
         {
             _gameover.SetActive(true);
         }
