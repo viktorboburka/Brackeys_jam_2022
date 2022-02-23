@@ -31,8 +31,6 @@ public class Memory : MonoBehaviour
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
             player.reduceMemory();
-            Debug.Log(player.getMemoryLeftCount());
-            Debug.Log(player.getSavedMemoryCount());
             //TODO: play death animation
         }
         if (other.gameObject.tag == "Player") {
@@ -42,8 +40,6 @@ public class Memory : MonoBehaviour
             _timeOfDeath = Time.timeSinceLevelLoad;
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
-            Debug.Log(player.getMemoryLeftCount());
-            Debug.Log(player.getSavedMemoryCount());
             //TODO: play save animation
         }
         

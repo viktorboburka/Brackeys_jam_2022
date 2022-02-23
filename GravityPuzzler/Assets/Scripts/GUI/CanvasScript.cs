@@ -42,6 +42,7 @@ public class CanvasScript : MonoBehaviour {
             {
                 if (i < _memoriesCollected)
                 {
+                    Debug.Log(_memoryImages[i]);
                     _memoryImages[i].SetActive(true);
                 }
             }
