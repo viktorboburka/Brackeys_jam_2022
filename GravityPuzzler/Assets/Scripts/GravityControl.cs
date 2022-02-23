@@ -38,6 +38,7 @@ public class GravityControl : MonoBehaviour {
         cameraControl = Camera.main.GetComponent<CameraControl>();//GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
+        changeGravity(_timeline[0].direction);
     }
 
     // Update is called once per frame
