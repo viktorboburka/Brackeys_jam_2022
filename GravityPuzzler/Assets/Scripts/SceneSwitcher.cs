@@ -13,7 +13,6 @@ public class SceneSwitcher : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         sceneCount = SceneManager.sceneCountInBuildSettings;
-        memory = GameObject.FindGameObjectWithTag("Memory").GetComponent<Memory>();
     }
 
     // Update is called once per frame

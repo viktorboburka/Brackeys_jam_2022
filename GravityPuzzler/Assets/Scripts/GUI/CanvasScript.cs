@@ -34,7 +34,7 @@ public class CanvasScript : MonoBehaviour {
         if (!_player.isDead() && _player.survived()) {
             _complete.SetActive(true);
         }
-        if(!_player.isDead() && _player.getMemoryLeftCount() == 0 && _player.getSavedMemoryCount() > 0)
+        if(!_player.isDead() && (_player.getMemoryLeftCount() == 0) && _player.getSavedMemoryCount() > 0)
         {
             _complete.SetActive(true);
             _memoriesCollected = _player.getSavedMemoryCount();
