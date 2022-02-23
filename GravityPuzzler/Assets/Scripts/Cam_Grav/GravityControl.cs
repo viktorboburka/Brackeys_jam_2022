@@ -41,18 +41,10 @@ public class GravityControl : MonoBehaviour {
         changeGravity(_timeline[0].direction);
     }
 
-    bool _inputTouched = false;
     // Update is called once per frame
     void Update()
     {
-        if (_inputTouched)
-        {
-            triggerTimedGravityChanges();
-        } else
-        {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            if (System.Math.Abs(horizontalInput) > 0.05f) _inputTouched = true;
-        }
+        triggerTimedGravityChanges();
     }
 
     void triggerTimedGravityChanges()
