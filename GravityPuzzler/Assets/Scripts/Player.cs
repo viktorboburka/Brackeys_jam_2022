@@ -7,9 +7,13 @@ public class Player : GravityInfluenced
     private float _acceleration = 60;
     private float _accelerationAir = 60;
     private string _gravityDir;
+    private float _maxSpeed = 15;
+
     private bool _isDead = false;
     private bool _survived = false;
-    private float _maxSpeed = 15;
+    private float _timeOfDeath = Mathf.Infinity;
+
+    private int _savedMemories = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,9 @@ public class Player : GravityInfluenced
     {
         base.Update();
         calculateMovement();
+        if (_timeOfDeath == Mathf.Infinity && isDead()) {
+            _timeOfDeath = Time.timeSinceLevelLoad;
+        }
     }
 
     void calculateMovement()
@@ -95,6 +102,10 @@ public class Player : GravityInfluenced
     }
 
 
+    public float getTimeOfDeath() {
+        return _timeOfDeath;
+    }
+
     public bool isDead()
     {
         return _isDead;
@@ -109,5 +120,10 @@ public class Player : GravityInfluenced
     {
         return _survived;
     }
+
+    public void savedMemory() {
+        _savedMemories++;
+    }
+
 }
 

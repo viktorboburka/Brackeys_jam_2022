@@ -7,6 +7,8 @@ public class SceneSwitcher : MonoBehaviour
 {
     private Player player;
     private int sceneCount;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,13 @@ public class SceneSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.isDead() && Input.GetKey("space"))
-        {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        /*if (player.getTimeOfDeath() > Time.timeSinceLevelLoad + 3f)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }*/
         if (player.isDead() && Input.GetKey("escape"))
         {
             SceneManager.LoadScene(0);
@@ -33,7 +37,7 @@ public class SceneSwitcher : MonoBehaviour
             int nextScene = index + 1;
             if(nextScene >= sceneCount)
             {
-                return; 
+                return;
             } else
             {
                 SceneManager.LoadScene(nextScene);

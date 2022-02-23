@@ -41,7 +41,7 @@ public class CameraControl : MonoBehaviour {
                 _targetRotation = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
         }
-        _rotationChangedTime = Time.time;
+        _rotationChangedTime = Time.timeSinceLevelLoad;
         //Debug.Log("target camera rotation: " + _targetRotation);
     }
 
