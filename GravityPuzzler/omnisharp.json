@@ -3,7 +3,7 @@
         "NewLinesForBracesInLambdaExpressionBody": false,
         "NewLinesForBracesInAnonymousMethods": false,
         "NewLinesForBracesInAnonymousTypes": false,
-        "NewLinesForBracesInControlBlocks": true,
+        "NewLinesForBracesInControlBlocks": false,
         "NewLinesForBracesInTypes": false,
         "NewLinesForBracesInMethods": true,
         "NewLinesForBracesInProperties": false,
