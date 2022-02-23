@@ -26,5 +26,5 @@ public sealed class PersistentData {
         PersistentDataSaver.Save();
     }
 
-    public PersistentData Instance { get { return PersistentDataSaver.Instance; } }
+    public static PersistentData Instance { get { return PersistentDataSaver.Instance; } }
 }
