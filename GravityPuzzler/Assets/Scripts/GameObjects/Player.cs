@@ -21,7 +21,7 @@ public class Player : GravityInfluenced {
     // Start is called before the first frame update
     void Start()
     {
-
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -37,6 +37,10 @@ public class Player : GravityInfluenced {
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
+        if(System.Math.Abs(horizontalInput) > 0.05f) {
+            Time.timeScale = 1;
+        }
+
         var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
         //Debug.Log(horizontalInput);
 
