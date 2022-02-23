@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1.unity
     guid: b710a0d3c3a94a0468c34195b4f0453b
   - enabled: 1
+    path: Assets/Scenes/ViktorTestScene.unity
+    guid: 52116c0640879434faf4ae6b5fbbb9b5
+  - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 840929f28f9d526498210e155c4c012e
   m_configObjects: {}

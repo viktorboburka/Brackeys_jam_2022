@@ -32,7 +32,11 @@ public class Timer : MonoBehaviour
                 timerIsRunning = false;
                 player.setSurvived(true);
             }
+            if (timeRemaining < 0) {
+                timeRemaining = 0;
+            }
         }
+        //Debug.Log(timeRemaining);
         DisplayTime(timeRemaining);
     }
 

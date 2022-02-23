@@ -23,25 +23,25 @@ public class CameraControl : MonoBehaviour {
         smoothRotate();
     }
 
-    public void setTargetRotation(string target) {
+    public void setTargetRotation(GravityControl.GravityDirection target) {
         switch (target) {
-            case "up":
+            case GravityControl.GravityDirection.UP:
                 _targetRotation = new Vector3 (0.0f, 0.0f, 180.0f);
                 break;
-            case "down":
+            case GravityControl.GravityDirection.DOWN:
                 _targetRotation = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
-            case "left":
+            case GravityControl.GravityDirection.LEFT:
                 _targetRotation = new Vector3(0.0f, 0.0f, -90f);
                 break;
-            case "right":
+            case GravityControl.GravityDirection.RIGHT:
                 _targetRotation = new Vector3(0.0f, 0.0f, 90.0f);
                 break;
             default:
                 _targetRotation = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
         }
-        _rotationChangedTime = Time.time;
+        _rotationChangedTime = Time.timeSinceLevelLoad;
         //Debug.Log("target camera rotation: " + _targetRotation);
     }
 
