@@ -11,10 +11,10 @@ public class SceneSwitcher : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        int sceneCount = SceneManager.sceneCountInBuildSettings;
+        sceneCount = SceneManager.sceneCountInBuildSettings;
+        Debug.Log("Scene count is: " + sceneCount);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (player.isDead() && Input.GetKey("space"))
@@ -22,7 +22,7 @@ public class SceneSwitcher : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
-        if (player.isDead() && Input.GetKey("escape"))
+        if ((player.isDead() || player.survived()) && Input.GetKey("escape"))
         {
             SceneManager.LoadScene(0);
         }
@@ -31,13 +31,16 @@ public class SceneSwitcher : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             int index = scene.buildIndex;
             int nextScene = index + 1;
-            if(nextScene >= sceneCount)
-            {
-                return; 
-            } else
+            Debug.Log("Next scene index is: " + nextScene);
+            if(nextScene < sceneCount)
             {
                 SceneManager.LoadScene(nextScene);
+                
+            } else
+            {
+                return;
             }
+            
         }
     }
 }
