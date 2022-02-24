@@ -21,6 +21,7 @@ public class CameraControl : MonoBehaviour {
     void Update()
     {
         smoothRotate();
+        
     }
 
     public void setTargetRotation(GravityControl.GravityDirection target) {
