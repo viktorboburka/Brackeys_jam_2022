@@ -19,6 +19,7 @@ using UnityEngine;
 public sealed class PersistentData {
     public int lastLevel;
     public Dictionary<string, int> highScores;
+    public bool helpShown;
 
     public delegate void Updater(PersistentData instance);
     public static void Update(Updater updater)

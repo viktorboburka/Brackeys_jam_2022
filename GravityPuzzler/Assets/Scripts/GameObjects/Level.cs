@@ -29,6 +29,10 @@ public class Level : MonoBehaviour {
         get;
         private set;
     }
+    public int memoryCount {
+        get;
+        private set;
+    }
     public void onMemoryKilled()
     {
         reduceRemainingMemories();
@@ -49,7 +53,14 @@ public class Level : MonoBehaviour {
                     Debug.Log($"scene: {scene.path} ({scene.buildIndex})");
                     data.lastLevel = System.Math.Max(scene.buildIndex + 1, data.lastLevel);
                     if (data.highScores == null) data.highScores = new Dictionary<string, int>();
-                    data.highScores.Add(scene.path, savedMemoryCount);
+                    if (data.highScores.TryGetValue(scene.path, out var prevValue)) {
+                        if (prevValue < savedMemoryCount) {
+                            data.highScores.Remove(scene.path);
+                            data.highScores.Add(scene.path, savedMemoryCount);
+                        }
+                    } else {
+                        data.highScores.Add(scene.path, savedMemoryCount);
+                    }
                 });
             } else {
                 state = State.LOST;
@@ -59,6 +70,7 @@ public class Level : MonoBehaviour {
     public void onMemorySpawn()
     {
         memoriesLeft++;
+        memoryCount++;
     }
     #endregion
 

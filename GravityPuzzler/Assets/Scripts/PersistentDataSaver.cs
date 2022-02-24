@@ -8,11 +8,11 @@ public sealed class PersistentDataSaver {
     static PersistentData _instance;
     public static string DataDirectory {
         get {
-            if (Application.platform == RuntimePlatform.Android) return Path.Combine(Application.persistentDataPath, "user-data");
-            return Path.Combine(Directory.GetCurrentDirectory(), "user-data");
+            if (Application.platform == RuntimePlatform.Android) return Path.Combine(Application.persistentDataPath);
+            return Path.Combine(Directory.GetCurrentDirectory());
         }
     }
-    static string DataPath => Path.Combine(DataDirectory, "config.json");
+    static string DataPath => Path.Combine(DataDirectory, "save-state.json");
 
     public static PersistentData Instance {
         get {
@@ -49,7 +49,6 @@ public sealed class PersistentDataSaver {
         _shouldResave = false;
 
         Debug.Log($"Writing PersistentData to {DataPath}");
-        Directory.CreateDirectory(DataDirectory);
         {
             using var writer = new StreamWriter(DataPath);
             await writer.WriteAsync(JsonConvert.SerializeObject(_instance));

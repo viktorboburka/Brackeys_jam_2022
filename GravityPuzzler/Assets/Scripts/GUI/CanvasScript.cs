@@ -9,6 +9,8 @@ public class CanvasScript : MonoBehaviour {
     [SerializeField]
     private GameObject _complete;
     [SerializeField]
+    private GameObject _completeFull;
+    [SerializeField]
     private GameObject[] _memoryImages;
     [SerializeField]
     private GameObject _help;
@@ -19,7 +21,9 @@ public class CanvasScript : MonoBehaviour {
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
+        if (!PersistentData.Instance.helpShown) {
+            _help.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -36,14 +40,22 @@ public class CanvasScript : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.H)) {
             _help.SetActive(!_help.activeSelf);
+            if (!PersistentData.Instance.helpShown) {
+                PersistentData.Update(data => {
+                    data.helpShown = true;
+                });
+            }
         }
         if (level.state == Level.State.LOST && !_gameover.activeInHierarchy) {
             _gameover.SetActive(true);
         }
 
-        if (level.state == Level.State.WON && !_complete.activeInHierarchy) {
-            _complete.SetActive(true);
+        if (level.state == Level.State.WON) {
+            if (level.memoryCount == level.savedMemoryCount) {
+                if (!_completeFull.activeInHierarchy) _completeFull.SetActive(true);
+            } else {
+                if (!_complete.activeInHierarchy) _complete.SetActive(true);
+            }
         }
-
     }
 }
