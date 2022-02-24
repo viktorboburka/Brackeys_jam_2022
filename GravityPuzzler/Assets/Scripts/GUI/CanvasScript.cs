@@ -7,6 +7,8 @@ public class CanvasScript : MonoBehaviour {
     [SerializeField]
     private GameObject _gameover;
     [SerializeField]
+    private GameObject _gameoverDead;
+    [SerializeField]
     private GameObject _complete;
     [SerializeField]
     private GameObject _completeFull;
@@ -46,8 +48,12 @@ public class CanvasScript : MonoBehaviour {
                 });
             }
         }
-        if (level.state == Level.State.LOST && !_gameover.activeInHierarchy) {
-            _gameover.SetActive(true);
+        if (level.state == Level.State.LOST) {
+            if (level.memoriesLeft > 0) {
+                if (!_gameoverDead.activeInHierarchy) _gameoverDead.SetActive(true);
+            } else {
+                if (!_gameover.activeInHierarchy) _gameover.SetActive(true);
+            }
         }
 
         if (level.state == Level.State.WON) {

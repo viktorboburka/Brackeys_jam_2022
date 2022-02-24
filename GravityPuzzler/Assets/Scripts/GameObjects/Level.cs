@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
     public enum State {
-        INIT, // before first input
-        RUNNING,
-        LOST,
-        WON,
+        INIT = 0, // before first input
+        RUNNING = 1,
+        LOST = 2,
+        WON = 3,
     }
     public State state {
         get;
@@ -21,6 +21,8 @@ public class Level : MonoBehaviour {
     }
     public void onMemorySaved()
     {
+        // do not change stats after game over
+        if (state > State.RUNNING) return;
         savedMemoryCount++;
         reduceRemainingMemories();
     }
@@ -35,6 +37,8 @@ public class Level : MonoBehaviour {
     }
     public void onMemoryKilled()
     {
+        // do not change stats after game over
+        if (state > State.RUNNING) return;
         reduceRemainingMemories();
     }
     private void reduceRemainingMemories()
@@ -69,6 +73,8 @@ public class Level : MonoBehaviour {
     }
     public void onMemorySpawn()
     {
+        // do not change stats after game over
+        if (state > State.RUNNING) return;
         memoriesLeft++;
         memoryCount++;
     }
