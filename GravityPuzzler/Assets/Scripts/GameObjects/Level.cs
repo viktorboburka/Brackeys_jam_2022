@@ -46,10 +46,10 @@ public class Level : MonoBehaviour {
                 state = State.WON;
                 PersistentData.Update(data => {
                     var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-                    Debug.Log($"scene: {scene.name} ({scene.buildIndex})");
+                    Debug.Log($"scene: {scene.path} ({scene.buildIndex})");
                     data.lastLevel = System.Math.Max(scene.buildIndex + 1, data.lastLevel);
                     if (data.highScores == null) data.highScores = new Dictionary<string, int>();
-                    data.highScores.Add(scene.name, savedMemoryCount);
+                    data.highScores.Add(scene.path, savedMemoryCount);
                 });
             } else {
                 state = State.LOST;
