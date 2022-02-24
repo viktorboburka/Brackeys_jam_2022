@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 600386443774880037}
   - component: {fileID: 8250809496426004367}
   m_Layer: 0
-  m_Name: memory-green
+  m_Name: memory sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d352f245b89db443fbcda8e6f1cb02a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0184a2d6c064d31468846227d9c05e53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
