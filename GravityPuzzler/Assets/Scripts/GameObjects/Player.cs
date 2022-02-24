@@ -16,8 +16,8 @@ public class Player : GravityInfluenced {
     private bool _survived = false;
     private float _timeOfDeath = Mathf.Infinity;
     private int _savedMemories = 0;
-    [SerializeField]
-    private int _numberOfMemoriesLeft;
+    //[SerializeField]
+    private int _numberOfMemoriesLeft = 3;
 
     [SerializeField]
     private PhysicsMaterial2D _deadMaterial;
