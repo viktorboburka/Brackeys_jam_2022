@@ -25,9 +25,9 @@ public class Timer : MonoBehaviour {
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
-                player.setSurvived(true);
                 PersistentData.Update(data => {
                     var scene = SceneManager.GetActiveScene().buildIndex;
+                    Debug.Log($"scene: {scene}");
                     data.lastLevel = System.Math.Max(scene + 1, data.lastLevel);
                 });
             }

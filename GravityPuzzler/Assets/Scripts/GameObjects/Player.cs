@@ -13,7 +13,6 @@ public class Player : GravityInfluenced {
     private float _deccelerationIdleMultiplier = 0.1f;
 
     private bool _isDead = false;
-    private bool _survived = false;
     private float _timeOfDeath = Mathf.Infinity;
     private int _savedMemories = 0;
     //[SerializeField]
@@ -43,18 +42,17 @@ public class Player : GravityInfluenced {
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if(System.Math.Abs(horizontalInput) > 0.05f) {
+        if (System.Math.Abs(horizontalInput) > 0.05f) {
             Time.timeScale = 1;
         }
 
         var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
         //Debug.Log(horizontalInput);
 
-        
+
         Vector2 velVec;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        switch (_gravityDir)
-        {
+        switch (_gravityDir) {
             case GravityControl.GravityDirection.DOWN:
                 //slow down when there is no input
                 if (horizontalInput == 0f) {
@@ -68,8 +66,7 @@ public class Player : GravityInfluenced {
                     if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(velVec.x)) {
                         velVec *= _deccelerationMultiplier;
                     }
-                }
-                else {
+                } else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
@@ -87,8 +84,7 @@ public class Player : GravityInfluenced {
                     if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(velVec.x)) {
                         velVec *= _deccelerationMultiplier;
                     }
-                }
-                else {
+                } else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
@@ -106,8 +102,7 @@ public class Player : GravityInfluenced {
                     if (Mathf.Sign(rb.velocity.y) != Mathf.Sign(velVec.y)) {
                         velVec *= _deccelerationMultiplier;
                     }
-                }
-                else {
+                } else {
                     velVec = new Vector2(0, 0);
                 }
                 break;
@@ -124,11 +119,10 @@ public class Player : GravityInfluenced {
                     if (Mathf.Sign(rb.velocity.y) != Mathf.Sign(velVec.y)) {
                         velVec *= _deccelerationMultiplier;
                     }
-                }
-                else {
+                } else {
                     velVec = new Vector2(0, 0);
                 }
-                
+
                 break;
             default:
                 velVec = new Vector2(horizontalInput, 0);
@@ -137,35 +131,35 @@ public class Player : GravityInfluenced {
 
         if (hit) {
             rb.velocity += velVec * _acceleration * Time.deltaTime;
-        }
-        else {
+        } else {
             rb.velocity += velVec * _accelerationAir * Time.deltaTime;
         }
     }
 
-    public void changeDirection(GravityControl.GravityDirection targetDir) {
+    public void changeDirection(GravityControl.GravityDirection targetDir)
+    {
         if (_isDead) {
             return;
         }
-        float [,] anglesBetweenDir = new float[4, 4] {
+        float[,] anglesBetweenDir = new float[4, 4] {
             {0, -90, 180, 90},
             {90, 0, -90, 180},
             {180, 90, 0, -90},
             {-90, 180, 90, 0}
         };
 
-        float rotation = anglesBetweenDir[(int) _gravityDir, (int) targetDir];
+        float rotation = anglesBetweenDir[(int)_gravityDir, (int)targetDir];
         gameObject.transform.Rotate(new Vector3(0, 0, rotation));
     }
 
-    public void rotateControls(GravityControl.GravityDirection gravity) {
+    public void rotateControls(GravityControl.GravityDirection gravity)
+    {
         _gravityDir = gravity;
     }
-   
+
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "KillerPlatform")
-        {
+        if (other.gameObject.tag == "KillerPlatform") {
             _isDead = true;
             gameObject.GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
             gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
@@ -175,7 +169,8 @@ public class Player : GravityInfluenced {
     }
 
 
-    public float getTimeOfDeath() {
+    public float getTimeOfDeath()
+    {
         return _timeOfDeath;
     }
 
@@ -184,17 +179,8 @@ public class Player : GravityInfluenced {
         return _isDead;
     }
 
-    public void setSurvived(bool survived)
+    public void savedMemory()
     {
-        _survived = survived;
-    }
-
-    public bool survived()
-    {
-        return _survived;
-    }
-
-    public void savedMemory() {
         _savedMemories++;
     }
 
@@ -203,7 +189,8 @@ public class Player : GravityInfluenced {
         _numberOfMemoriesLeft--;
     }
 
-    public int getSavedMemoryCount() {
+    public int getSavedMemoryCount()
+    {
         return _savedMemories;
     }
 

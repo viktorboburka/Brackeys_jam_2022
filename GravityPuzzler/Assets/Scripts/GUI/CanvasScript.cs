@@ -36,17 +36,14 @@ public class CanvasScript : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.H)) {
             _help.SetActive(!_help.activeSelf);
         }
-        if (_player.isDead() && !_player.survived() && !_complete.activeInHierarchy) {
+        if (_player.isDead() && !_complete.activeInHierarchy) {
             _gameover.SetActive(true);
         }
-        if (!_player.isDead() && _player.survived()) {
-            _complete.SetActive(true);
-        }
-        if(!_player.isDead() && (_player.getMemoryLeftCount() == 0) && _player.getSavedMemoryCount() > 0)
-        {
+
+        if (!_player.isDead() && (_player.getMemoryLeftCount() == 0) && _player.getSavedMemoryCount() > 0) {
             _complete.SetActive(true);
             //_memoriesCollected = _player.getSavedMemoryCount();
         }
-        
+
     }
 }

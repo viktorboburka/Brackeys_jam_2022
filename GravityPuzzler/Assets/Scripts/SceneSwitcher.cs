@@ -28,7 +28,7 @@ public class SceneSwitcher : MonoBehaviour {
         if (player.isDead() && Input.GetKey(KeyCode.Escape)) {
             SceneManager.LoadScene(0);
         }
-        if (!player.isDead() && player.survived() && Input.GetKey(KeyCode.Return)) {
+        if (!player.isDead() && Input.GetKey(KeyCode.Return)) {
             Scene scene = SceneManager.GetActiveScene();
             int index = scene.buildIndex;
             int nextScene = index + 1;
@@ -39,17 +39,13 @@ public class SceneSwitcher : MonoBehaviour {
             }
         }
 
-        if ((player.getMemoryLeftCount() == 0) && !player.isDead() && Input.GetKey(KeyCode.Return))
-        {
+        if ((player.getMemoryLeftCount() == 0) && !player.isDead() && Input.GetKey(KeyCode.Return)) {
             Scene scene = SceneManager.GetActiveScene();
             int index = scene.buildIndex;
             int nextScene = index + 1;
-            if (nextScene >= sceneCount)
-            {
+            if (nextScene >= sceneCount) {
                 return;
-            }
-            else
-            {
+            } else {
                 SceneManager.LoadScene(nextScene);
             }
         }
