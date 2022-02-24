@@ -4,14 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour {
-    private Player player;
     private int sceneCount;
-    private Memory memory;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         sceneCount = SceneManager.sceneCountInBuildSettings;
     }
 
@@ -25,10 +22,12 @@ public class SceneSwitcher : MonoBehaviour {
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }*/
-        if (player.isDead() && Input.GetKey(KeyCode.Escape)) {
+        var state = Level.activeLevel.state;
+        bool isEndScreen = state == Level.State.WON || state == Level.State.LOST;
+        if (isEndScreen && Input.GetKey(KeyCode.Escape)) {
             SceneManager.LoadScene(0);
         }
-        if (!player.isDead() && Input.GetKey(KeyCode.Return)) {
+        if (isEndScreen && Input.GetKey(KeyCode.Return)) {
             Scene scene = SceneManager.GetActiveScene();
             int index = scene.buildIndex;
             int nextScene = index + 1;
@@ -39,7 +38,7 @@ public class SceneSwitcher : MonoBehaviour {
             }
         }
 
-        if ((player.getMemoryLeftCount() == 0) && !player.isDead() && Input.GetKey(KeyCode.Return)) {
+        if (state == Level.State.WON && Input.GetKey(KeyCode.Return)) {
             Scene scene = SceneManager.GetActiveScene();
             int index = scene.buildIndex;
             int nextScene = index + 1;
@@ -49,7 +48,5 @@ public class SceneSwitcher : MonoBehaviour {
                 SceneManager.LoadScene(nextScene);
             }
         }
-
-
     }
 }

@@ -12,30 +12,23 @@ public class Player : GravityInfluenced {
     private float _deccelerationMultiplier = 2f;
     private float _deccelerationIdleMultiplier = 0.1f;
 
-    private bool _isDead = false;
-    private float _timeOfDeath = Mathf.Infinity;
-    private int _savedMemories = 0;
-    //[SerializeField]
-    private int _numberOfMemoriesLeft = 3;
 
     [SerializeField]
     private PhysicsMaterial2D _deadMaterial;
 
-    // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
-    }
 
-    // Update is called once per frame
+    }
+    bool movementAllowed => Level.activeLevel.state == Level.State.INIT || Level.activeLevel.state == Level.State.RUNNING;
+    bool isDead => Level.activeLevel.state == Level.State.LOST;
+
     protected override void Update()
     {
         base.Update();
-        if (!_isDead) {
+
+        if (movementAllowed) {
             calculateMovement();
-        }
-        if (_timeOfDeath == Mathf.Infinity && isDead()) {
-            _timeOfDeath = Time.timeSinceLevelLoad;
         }
     }
 
@@ -43,7 +36,7 @@ public class Player : GravityInfluenced {
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (System.Math.Abs(horizontalInput) > 0.05f) {
-            Time.timeScale = 1;
+            Level.activeLevel.OnMovement();
         }
 
         var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
@@ -138,7 +131,7 @@ public class Player : GravityInfluenced {
 
     public void changeDirection(GravityControl.GravityDirection targetDir)
     {
-        if (_isDead) {
+        if (isDead) {
             return;
         }
         float[,] anglesBetweenDir = new float[4, 4] {
@@ -160,44 +153,12 @@ public class Player : GravityInfluenced {
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "KillerPlatform") {
-            _isDead = true;
+            Level.activeLevel.killPlayer();
             gameObject.GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
             gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
 
             //Debug.Log("you are dead");
         }
     }
-
-
-    public float getTimeOfDeath()
-    {
-        return _timeOfDeath;
-    }
-
-    public bool isDead()
-    {
-        return _isDead;
-    }
-
-    public void savedMemory()
-    {
-        _savedMemories++;
-    }
-
-    public void reduceMemory()
-    {
-        _numberOfMemoriesLeft--;
-    }
-
-    public int getSavedMemoryCount()
-    {
-        return _savedMemories;
-    }
-
-    public int getMemoryLeftCount()
-    {
-        return _numberOfMemoriesLeft;
-    }
-
 }
 

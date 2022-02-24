@@ -25,7 +25,8 @@ public class CanvasScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        _memoriesCollected = _player.getSavedMemoryCount();
+        var level = Level.activeLevel;
+        _memoriesCollected = level.savedMemoryCount;
         for (int i = 0; i < _memoryImages.Length; i++) {
             if (i < _memoriesCollected) {
                 //Debug.Log(_memoryImages[i]);
@@ -36,13 +37,12 @@ public class CanvasScript : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.H)) {
             _help.SetActive(!_help.activeSelf);
         }
-        if (_player.isDead() && !_complete.activeInHierarchy) {
+        if (level.state == Level.State.LOST && !_gameover.activeInHierarchy) {
             _gameover.SetActive(true);
         }
 
-        if (!_player.isDead() && (_player.getMemoryLeftCount() == 0) && _player.getSavedMemoryCount() > 0) {
+        if (level.state == Level.State.WON && !_complete.activeInHierarchy) {
             _complete.SetActive(true);
-            //_memoriesCollected = _player.getSavedMemoryCount();
         }
 
     }
