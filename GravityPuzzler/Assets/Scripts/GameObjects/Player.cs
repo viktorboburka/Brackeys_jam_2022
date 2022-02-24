@@ -11,12 +11,16 @@ public class Player : GravityInfluenced {
     private float _maxSpeed = 10;
     private float _deccelerationMultiplier = 2f;
     private float _deccelerationIdleMultiplier = 0.1f;
+
     private bool _isDead = false;
     private bool _survived = false;
     private float _timeOfDeath = Mathf.Infinity;
     private int _savedMemories = 0;
     [SerializeField]
     private int _numberOfMemoriesLeft;
+
+    [SerializeField]
+    private PhysicsMaterial2D _deadMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,9 @@ public class Player : GravityInfluenced {
     protected override void Update()
     {
         base.Update();
-        calculateMovement();
+        if (!_isDead) {
+            calculateMovement();
+        }
         if (_timeOfDeath == Mathf.Infinity && isDead()) {
             _timeOfDeath = Time.timeSinceLevelLoad;
         }
@@ -129,9 +135,6 @@ public class Player : GravityInfluenced {
                 break;
         }
 
-        if (_isDead) {
-            velVec = new Vector2(0, 0);
-        }
         if (hit) {
             rb.velocity += velVec * _acceleration * Time.deltaTime;
         }
@@ -141,6 +144,9 @@ public class Player : GravityInfluenced {
     }
 
     public void changeDirection(GravityControl.GravityDirection targetDir) {
+        if (_isDead) {
+            return;
+        }
         float [,] anglesBetweenDir = new float[4, 4] {
             {0, -90, 180, 90},
             {90, 0, -90, 180},
@@ -161,7 +167,10 @@ public class Player : GravityInfluenced {
         if(other.gameObject.tag == "KillerPlatform")
         {
             _isDead = true;
-            Debug.Log("you are dead");
+            gameObject.GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
+            gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
+
+            //Debug.Log("you are dead");
         }
     }
 

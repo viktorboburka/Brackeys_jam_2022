@@ -25,10 +25,18 @@ public class CanvasScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        _memoriesCollected = _player.getSavedMemoryCount();
+        for (int i = 0; i < _memoryImages.Length; i++) {
+            if (i < _memoriesCollected) {
+                //Debug.Log(_memoryImages[i]);
+                _memoryImages[i].SetActive(true);
+            }
+        }
+
         if (Input.GetKeyUp(KeyCode.H)) {
             _help.SetActive(!_help.activeSelf);
         }
-        if (_player.isDead() && !_player.survived()) {
+        if (_player.isDead() && !_player.survived() && !_complete.activeInHierarchy) {
             _gameover.SetActive(true);
         }
         if (!_player.isDead() && _player.survived()) {
@@ -37,15 +45,7 @@ public class CanvasScript : MonoBehaviour {
         if(!_player.isDead() && (_player.getMemoryLeftCount() == 0) && _player.getSavedMemoryCount() > 0)
         {
             _complete.SetActive(true);
-            _memoriesCollected = _player.getSavedMemoryCount();
-            for (int i = 0; i < _memoryImages.Length; i++)
-            {
-                if (i < _memoriesCollected)
-                {
-                    Debug.Log(_memoryImages[i]);
-                    _memoryImages[i].SetActive(true);
-                }
-            }
+            //_memoriesCollected = _player.getSavedMemoryCount();
         }
         
     }
