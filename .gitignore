@@ -4,5 +4,6 @@ GravityPuzzler/UserSettings/EditorUserSettings.asset
 .DS_Store
 # MacOS build
 *.app
+build
 user-data
 save-state.json
