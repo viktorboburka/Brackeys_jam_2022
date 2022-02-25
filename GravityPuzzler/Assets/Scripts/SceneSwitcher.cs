@@ -24,7 +24,7 @@ public class SceneSwitcher : MonoBehaviour {
         }*/
         var state = Level.activeLevel.state;
         bool isEndScreen = state == Level.State.WON || state == Level.State.LOST;
-        if (isEndScreen && Input.GetKey(KeyCode.Escape)) {
+        if (isEndScreen && Input.GetKey(KeyCode.M)) {
             SceneManager.LoadScene(0);
         }
         if (isEndScreen && Input.GetKey(KeyCode.Return)) {

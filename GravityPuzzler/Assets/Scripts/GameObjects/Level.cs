@@ -54,6 +54,7 @@ public class Level : MonoBehaviour {
         if (memoriesLeft == 0) {
             if (savedMemoryCount > 0) {
                 state = State.WON;
+                Time.timeScale = 0;
                 PersistentData.Update(data => {
                     var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
                     Debug.Log($"scene: {scene.path} ({scene.buildIndex})");
