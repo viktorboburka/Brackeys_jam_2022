@@ -30,12 +30,12 @@ public class MusicPlayer : MonoBehaviour {
     private void OnLevelFinishedLoading(Scene arg0, LoadSceneMode arg1)
     {
         playerAnimator = GameObject.FindGameObjectWithTag("Player")?.transform.GetComponentInChildren<Animator>();
-        if (playerAnimator) playerAnimator.enabled = false;
+        playerAnimator?.SetBool("dance", false);
     }
 
-    public void StartPlayerAnimator()
+    public void StartDancing()
     {
-        if (playerAnimator && !playerAnimator.enabled) playerAnimator.enabled = true;
+        playerAnimator?.SetBool("dance", true);
         if (!source.isPlaying) source.Play();
     }
 }

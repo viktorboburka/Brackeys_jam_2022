@@ -19,7 +19,7 @@ public class MusicPlayerTrigger : StateMachineBehaviour {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var player = animator.GetComponent<MusicPlayer>();
-        player?.StartPlayerAnimator();
+        player?.StartDancing();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
