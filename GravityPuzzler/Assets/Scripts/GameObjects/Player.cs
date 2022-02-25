@@ -17,12 +17,14 @@ public class Player : GravityInfluenced {
 
     [SerializeField]
     private PhysicsMaterial2D _deadMaterial;
+    private Vector3 leftOffset;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         var boxCollider = GetComponent<BoxCollider2D>();
         floorDistance = boxCollider.size.y / 2 - boxCollider.offset.y + 0.1f;
+        leftOffset = new Vector3(-(boxCollider.size.x / 2 + boxCollider.offset.x), 0, 0);
     }
     bool movementAllowed => Level.activeLevel.state == Level.State.INIT || Level.activeLevel.state == Level.State.RUNNING;
     bool isDead => Level.activeLevel.state == Level.State.LOST;
@@ -36,6 +38,16 @@ public class Player : GravityInfluenced {
         }
     }
 
+    bool isOnGround()
+    {
+
+        var hitCenter = Physics2D.Raycast(transform.position, Physics2D.gravity, floorDistance, ~(1 << 2));
+        var hitLeft = Physics2D.Raycast(transform.position + leftOffset, Physics2D.gravity, floorDistance, ~(1 << 2));
+        var hitRight = Physics2D.Raycast(transform.position - leftOffset, Physics2D.gravity, floorDistance, ~(1 << 2));
+
+        return hitCenter || hitLeft || hitRight;
+    }
+
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -44,7 +56,7 @@ public class Player : GravityInfluenced {
             Level.activeLevel.OnMovement();
         }
 
-        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, floorDistance, ~(1 << 2));
+        var hit = isOnGround();
         //Debug.Log(horizontalInput);
 
         animator.SetBool("walking", hit && hasInput);
