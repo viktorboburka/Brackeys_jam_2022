@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : GravityInfluenced {
-
     private GravityControl.GravityDirection _gravityDir;
 
     private float _acceleration = 150;
@@ -172,8 +171,27 @@ public class Player : GravityInfluenced {
     {
         if (other.gameObject.tag == "KillerPlatform") {
             Level.activeLevel.killPlayer();
-            gameObject.GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
-            gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
+            GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
+            GetComponent<Rigidbody2D>().freezeRotation = false;
+
+            var sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var sprite in sprites) {
+                var rb = sprite.gameObject.AddComponent<Rigidbody2D>();
+                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                rb.drag = 1f;
+                rb.angularDrag = 1f;
+                sprite.gameObject.AddComponent<PolygonCollider2D>();
+                sprite.gameObject.AddComponent<GravityInfluenced>();
+                var skin = sprite.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteSkin>();
+                if (skin != null) Destroy(skin);
+                rb.AddForce(Vector2.up.Rotate(Random.Range(0f, 360f)) * 1000f);
+                const float torque = 100f;
+                rb.AddTorque(Random.Range(-torque, torque));
+            }
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(this);
+            Destroy(GetComponentInChildren<Animator>());
 
             //Debug.Log("you are dead");
         }
