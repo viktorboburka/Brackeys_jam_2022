@@ -23,6 +23,8 @@ public class GravityControl : MonoBehaviour {
     [SerializeField]
     private float _gravityScale = 3.0f;
 
+    private List<GameObject> _killerObjects;
+
     int timelineIndex = 0;
     float timeSinceLast = 0;
 
@@ -39,6 +41,16 @@ public class GravityControl : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
         changeGravity(_timeline[0].direction);
+
+        _killerObjects = new List<GameObject>();
+        GameObject[] killerEverything = GameObject.FindGameObjectsWithTag("KillerPlatform");
+        Debug.Log("killer everything count: " + killerEverything.Length);
+        foreach (GameObject go in killerEverything) {
+            if (go.GetComponent<GravityInfluenced>() != null) {
+                _killerObjects.Add(go);
+            }
+        }
+        Debug.Log("killer objects count: " + _killerObjects.Count);
     }
 
     // Update is called once per frame
@@ -67,6 +79,19 @@ public class GravityControl : MonoBehaviour {
             cameraControl.setTargetRotation(changeTo);
             player.changeDirection(_timeline[timelineIndex].direction);
             player.rotateControls(changeTo);
+            if (_killerObjects != null) {
+                setKillerObjectVelocityZero();
+            }
+        }
+    }
+
+    void setKillerObjectVelocityZero() {
+        foreach(GameObject go in _killerObjects) {
+            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+            if (rb == null) {
+                continue;
+            }
+            rb.velocity = new Vector2(0,0);
         }
     }
 
