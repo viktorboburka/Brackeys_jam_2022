@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour {
     public enum State {
         INIT = 0, // before first input
-        RUNNING = 1,
-        LOST = 2,
-        WON = 3,
+        PAUSED = 1,
+        RUNNING = 2,
+        LOST = 3,
+        WON = 4,
     }
     public State state {
         get;
@@ -90,6 +92,22 @@ public class Level : MonoBehaviour {
     void Start()
     {
         Time.timeScale = 0;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+            if (state == State.RUNNING) {
+                state = State.PAUSED;
+                Time.timeScale = 0;
+            } else if (state == State.PAUSED) {
+                state = State.RUNNING;
+                Time.timeScale = 1;
+            }
+        }
+        if (state == State.PAUSED && Input.GetKeyUp(KeyCode.M)) {
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void OnMovement()

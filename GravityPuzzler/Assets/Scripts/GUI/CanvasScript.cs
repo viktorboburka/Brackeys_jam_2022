@@ -16,6 +16,8 @@ public class CanvasScript : MonoBehaviour {
     private GameObject[] _memoryImages;
     [SerializeField]
     private GameObject _help;
+    [SerializeField]
+    private GameObject _paused;
 
     private int _memoriesCollected = 0;
 
@@ -34,9 +36,12 @@ public class CanvasScript : MonoBehaviour {
         var level = Level.activeLevel;
         _memoriesCollected = level.savedMemoryCount;
         for (int i = 0; i < _memoryImages.Length; i++) {
+            var image = _memoryImages[i];
             if (i < _memoriesCollected) {
                 //Debug.Log(_memoryImages[i]);
-                _memoryImages[i].SetActive(true);
+                if (!image.activeInHierarchy) image.SetActive(true);
+            } else {
+                if (image.activeInHierarchy) image.SetActive(false);
             }
         }
 
@@ -48,12 +53,16 @@ public class CanvasScript : MonoBehaviour {
                 });
             }
         }
+
         if (level.state == Level.State.LOST) {
             if (level.memoriesLeft > 0) {
                 if (!_gameoverDead.activeInHierarchy) _gameoverDead.SetActive(true);
             } else {
                 if (!_gameover.activeInHierarchy) _gameover.SetActive(true);
             }
+        } else {
+            if (_gameoverDead.activeInHierarchy) _gameoverDead.SetActive(false);
+            if (_gameover.activeInHierarchy) _gameover.SetActive(false);
         }
 
         if (level.state == Level.State.WON) {
@@ -62,6 +71,15 @@ public class CanvasScript : MonoBehaviour {
             } else {
                 if (!_complete.activeInHierarchy) _complete.SetActive(true);
             }
+        } else {
+            if (_completeFull.activeInHierarchy) _completeFull.SetActive(false);
+            if (_complete.activeInHierarchy) _complete.SetActive(false);
+        }
+
+        if (level.state == Level.State.PAUSED) {
+            if (!_paused.activeInHierarchy) _paused.SetActive(true);
+        } else {
+            if (_paused.activeInHierarchy) _paused.SetActive(false);
         }
     }
 }
