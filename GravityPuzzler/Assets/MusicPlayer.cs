@@ -27,7 +27,6 @@ public class MusicPlayer : MonoBehaviour {
 
     private void OnLevelFinishedLoading(Scene arg0, LoadSceneMode arg1)
     {
-        if (!source.isPlaying) source.Play();
         playerAnimator = GameObject.FindGameObjectWithTag("Player")?.transform.GetComponentInChildren<Animator>();
         if (playerAnimator) playerAnimator.enabled = false;
     }
@@ -35,5 +34,6 @@ public class MusicPlayer : MonoBehaviour {
     public void StartPlayerAnimator()
     {
         if (playerAnimator && !playerAnimator.enabled) playerAnimator.enabled = true;
+        if (!source.isPlaying) source.Play();
     }
 }
