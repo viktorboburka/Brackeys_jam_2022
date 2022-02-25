@@ -11,6 +11,8 @@ public class Player : GravityInfluenced {
     private float _maxSpeed = 10;
     private float _deccelerationMultiplier = 2f;
     private float _deccelerationIdleMultiplier = 0.1f;
+    private Animator animator;
+    private float floorDistance;
 
 
     [SerializeField]
@@ -18,7 +20,9 @@ public class Player : GravityInfluenced {
 
     void Start()
     {
-
+        animator = GetComponentInChildren<Animator>();
+        var boxCollider = GetComponent<BoxCollider2D>();
+        floorDistance = boxCollider.size.y / 2 - boxCollider.offset.y + 0.1f;
     }
     bool movementAllowed => Level.activeLevel.state == Level.State.INIT || Level.activeLevel.state == Level.State.RUNNING;
     bool isDead => Level.activeLevel.state == Level.State.LOST;
@@ -35,13 +39,15 @@ public class Player : GravityInfluenced {
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (System.Math.Abs(horizontalInput) > 0.05f) {
+        bool hasInput = System.Math.Abs(horizontalInput) > 0.05f;
+        if (hasInput) {
             Level.activeLevel.OnMovement();
         }
 
-        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, 1.1f, ~(1 << 2));
+        var hit = Physics2D.Raycast(transform.position, Physics2D.gravity, floorDistance, ~(1 << 2));
         //Debug.Log(horizontalInput);
 
+        animator.SetBool("walking", hit && hasInput);
 
         Vector2 velVec;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
