@@ -16,10 +16,15 @@ public class Player : GravityInfluenced {
 
     [SerializeField]
     private PhysicsMaterial2D _deadMaterial;
+    [SerializeField]
+    private GameObject _colorSource;
     private Vector3 leftOffset;
+    static Material colored;
 
     void Start()
     {
+        colored ??= Resources.Load<Material>("Colored");
+
         animator = GetComponentInChildren<Animator>();
         var boxCollider = GetComponent<BoxCollider2D>();
         floorDistance = boxCollider.size.y / 2 - boxCollider.offset.y + 0.1f;
@@ -35,6 +40,7 @@ public class Player : GravityInfluenced {
         if (movementAllowed) {
             calculateMovement();
         }
+        colored.SetVector("_Player_Pos", _colorSource.transform.position);
     }
 
     bool isOnGround()
