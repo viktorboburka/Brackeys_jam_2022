@@ -5,23 +5,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour {
+    static MusicPlayer instance;
     private Animator playerAnimator;
     private AudioSource source;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        source = GetComponent<AudioSource>();
-        DontDestroyOnLoad(gameObject);
-    }
-
     void OnEnable()
     {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+            source = GetComponent<AudioSource>();
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     void OnDisable()
     {
+        if (instance == this) instance = null;
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
