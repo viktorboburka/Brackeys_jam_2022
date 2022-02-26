@@ -9,7 +9,6 @@ public class LoadScene : MonoBehaviour {
     public int scene;
     [SerializeField]
     private List<GameObject> _memories = new List<GameObject>();
-    static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +27,7 @@ public class LoadScene : MonoBehaviour {
         if (_memories == null) return;
         int i = 0;
         foreach (var savedMemory in savedMemories) {
-            Sprite sprite;
-            if (!sprites.TryGetValue(savedMemory.sprite, out sprite)) {
-                sprite = Resources.Load<Sprite>(savedMemory.sprite);
-                sprites.Add(savedMemory.sprite, sprite);
-            }
-            Debug.Log(savedMemory.sprite);
-            _memories[i].GetComponent<Image>().sprite = sprite;
+            _memories[i].GetComponent<Image>().sprite = Memory.LoadSprite(savedMemory.sprite);
             ++i;
         }
     }

@@ -10,6 +10,17 @@ public class Memory : MonoBehaviour {
     [SerializeField]
     Color _color = Color.green;
 
+    static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+    public static Sprite LoadSprite(string name)
+    {
+        Sprite sprite;
+        if (!sprites.TryGetValue(name, out sprite)) {
+            sprite = Resources.Load<Sprite>(name);
+            sprites.Add(name, sprite);
+        }
+        return sprite;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

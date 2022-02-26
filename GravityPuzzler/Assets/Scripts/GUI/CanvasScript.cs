@@ -19,7 +19,6 @@ public class CanvasScript : MonoBehaviour {
     [SerializeField]
     private GameObject _paused;
 
-    private int _memoriesCollected = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +33,16 @@ public class CanvasScript : MonoBehaviour {
     void Update()
     {
         var level = Level.activeLevel;
-        _memoriesCollected = level.savedMemories.Count;
-        for (int i = 0; i < _memoryImages.Length; i++) {
-            var image = _memoryImages[i];
-            if (i < _memoriesCollected) {
-                //Debug.Log(_memoryImages[i]);
-                if (!image.activeInHierarchy) image.SetActive(true);
-            } else {
-                if (image.activeInHierarchy) image.SetActive(false);
+        {
+            int i = 0;
+            foreach (var saved in level.savedMemories) {
+                var image = _memoryImages[i];
+                if (!image.activeInHierarchy) {
+                    image.SetActive(true);
+                    var renderer = image.GetComponent<UnityEngine.UI.Image>();
+                    renderer.sprite = saved.sprite;
+                }
+                ++i;
             }
         }
 
