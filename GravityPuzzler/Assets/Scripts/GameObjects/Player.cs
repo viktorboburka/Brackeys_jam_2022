@@ -21,6 +21,9 @@ public class Player : GravityInfluenced {
     private Vector3 leftOffset;
     static Material colored;
 
+    [SerializeField]
+    AudioClip _deathSound;
+
     void Start()
     {
         colored ??= Resources.Load<Material>("Colored");
@@ -179,6 +182,8 @@ public class Player : GravityInfluenced {
             Level.activeLevel.killPlayer();
             GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
             GetComponent<Rigidbody2D>().freezeRotation = false;
+            GetComponent<AudioSource>().clip = _deathSound;
+            GetComponent<AudioSource>().Play();
 
             var sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var sprite in sprites) {
