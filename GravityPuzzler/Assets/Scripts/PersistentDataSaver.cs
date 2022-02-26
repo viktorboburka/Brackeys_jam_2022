@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ public sealed class PersistentDataSaver {
                     Debug.Log($"Application.persistentDataPath: {Application.persistentDataPath}, Current Directory: {Directory.GetCurrentDirectory()}");
                     using var reader = new StreamReader(DataPath);
                     fileData = reader.ReadToEnd();
-                    _instance = JsonConvert.DeserializeObject<PersistentData>(fileData);
+                    _instance = JsonConvert.DeserializeObject<PersistentData>(fileData) ?? new PersistentData();
                 } catch {
                     _instance = new PersistentData();
                 }
@@ -38,22 +39,30 @@ public sealed class PersistentDataSaver {
     static bool _shouldResave;
     public static void Save()
     {
+        Debug.Log($"Save() _shouldResave: {_shouldResave} _saving: {_saving}");
         if (_saving) _shouldResave = true;
         else _ = SaveInternal();
     }
 
     static async Task SaveInternal()
     {
+        Debug.Log("SaveInternal()");
         _saving = true;
-        await Task.Delay(10);
         _shouldResave = false;
-
-        Debug.Log($"Writing PersistentData to {DataPath}");
-        {
-            using var writer = new StreamWriter(DataPath);
-            await writer.WriteAsync(JsonConvert.SerializeObject(_instance));
+        try {
+            var value = JsonConvert.SerializeObject(_instance);
+            Debug.Log($"Writing PersistentData to {DataPath}");
+            Debug.Log(value);
+            {
+                using var writer = new StreamWriter(DataPath);
+                await writer.WriteAsync(value);
+            }
+            await Task.Delay(10);
+        } catch (Exception e) {
+            Debug.LogError(e);
         }
         _saving = false;
+        Debug.Log($"_saving = false");
 
         if (_shouldResave) Save();
     }

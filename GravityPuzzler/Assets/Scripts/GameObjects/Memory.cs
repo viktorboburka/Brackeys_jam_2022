@@ -44,7 +44,7 @@ public class Memory : MonoBehaviour {
         }
         if (other.gameObject.tag == "Player") {
             Player player = other.gameObject.GetComponent<Player>();
-            Level.activeLevel.onMemorySaved();
+            Level.activeLevel.onMemorySaved(_color, GetComponent<SpriteRenderer>().sprite);
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
 

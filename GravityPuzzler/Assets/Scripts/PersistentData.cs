@@ -18,7 +18,21 @@ using UnityEngine;
  */
 public sealed class PersistentData {
     public int lastLevel;
-    public Dictionary<string, int> highScores;
+    public class PersistableColor {
+        public float r, g, b, a;
+        public Color ToColor() { return new Color(r, g, b, a); }
+    };
+    public class Score {
+        public PersistableColor color;
+        public string sprite;
+
+        public Score(Color color, string sprite)
+        {
+            this.color = new PersistableColor { r = color.r, g = color.g, b = color.b, a = color.a };
+            this.sprite = sprite;
+        }
+    };
+    public Dictionary<string, Score[]> highScores = new Dictionary<string, Score[]>();
     public bool helpShown;
 
     public delegate void Updater(PersistentData instance);

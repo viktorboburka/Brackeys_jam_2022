@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Level : MonoBehaviour {
     public enum State {
@@ -17,15 +18,22 @@ public class Level : MonoBehaviour {
     }
 
     #region memory-related bookkeeping
-    public int savedMemoryCount {
-        get;
-        private set;
-    }
-    public void onMemorySaved()
+    public class SavedMemory {
+        public Color color;
+        public Sprite sprite;
+
+        public SavedMemory(Color color, Sprite sprite)
+        {
+            this.color = color;
+            this.sprite = sprite;
+        }
+    };
+    public readonly List<SavedMemory> savedMemories = new List<SavedMemory>();
+    public void onMemorySaved(Color color, Sprite sprite)
     {
         // do not change stats after game over
         if (state > State.RUNNING) return;
-        savedMemoryCount++;
+        savedMemories.Add(new SavedMemory(color, sprite));
         reduceRemainingMemories();
     }
 
@@ -52,21 +60,26 @@ public class Level : MonoBehaviour {
         memoriesLeft--;
 
         if (memoriesLeft == 0) {
-            if (savedMemoryCount > 0) {
+            if (savedMemories.Count > 0) {
                 state = State.WON;
                 PersistentData.Update(data => {
-                    var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                    var scene = SceneManager.GetActiveScene();
                     Debug.Log($"scene: {scene.path} ({scene.buildIndex})");
                     data.lastLevel = System.Math.Max(scene.buildIndex + 1, data.lastLevel);
-                    if (data.highScores == null) data.highScores = new Dictionary<string, int>();
+                    if (data.highScores == null) data.highScores = new Dictionary<string, PersistentData.Score[]>();
+                    var score = savedMemories.Select(v => new PersistentData.Score(v.color, v.sprite.name)).ToArray();
+                    Debug.Log($"{score.Length}");
+
                     if (data.highScores.TryGetValue(scene.path, out var prevValue)) {
-                        if (prevValue < savedMemoryCount) {
+                        Debug.Log($"{prevValue.Length} <= {score.Length}");
+                        if (prevValue.Length <= score.Length) {
                             data.highScores.Remove(scene.path);
-                            data.highScores.Add(scene.path, savedMemoryCount);
+                            data.highScores.Add(scene.path, score);
                         }
                     } else {
-                        data.highScores.Add(scene.path, savedMemoryCount);
+                        data.highScores.Add(scene.path, score);
                     }
+                    Debug.Log($"{data.highScores != null}");
                 });
             } else {
                 state = State.LOST;

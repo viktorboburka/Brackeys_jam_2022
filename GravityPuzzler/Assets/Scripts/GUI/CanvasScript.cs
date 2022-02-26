@@ -34,7 +34,7 @@ public class CanvasScript : MonoBehaviour {
     void Update()
     {
         var level = Level.activeLevel;
-        _memoriesCollected = level.savedMemoryCount;
+        _memoriesCollected = level.savedMemories.Count;
         for (int i = 0; i < _memoryImages.Length; i++) {
             var image = _memoryImages[i];
             if (i < _memoriesCollected) {
@@ -66,7 +66,7 @@ public class CanvasScript : MonoBehaviour {
         }
 
         if (level.state == Level.State.WON) {
-            if (level.memoryCount == level.savedMemoryCount) {
+            if (level.memoryCount == level.savedMemories.Count) {
                 if (!_completeFull.activeInHierarchy) _completeFull.SetActive(true);
             } else {
                 if (!_complete.activeInHierarchy) _complete.SetActive(true);

@@ -80,10 +80,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.32156864, g: 0.81568635, b: 0.35686275, a: 1}
-    - _Color_Outside: {r: 0.32156864, g: 0.81568635, b: 0.35686275, a: 1}
+    - _Color: {r: 0.990566, g: 0.92568445, b: 0.5669277, a: 1}
+    - _Color_Outside: {r: 0.990566, g: 0.92568445, b: 0.5669277, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Player_Pos: {r: -45.612335, g: -0.03491137, b: 10, a: 0}
+    - _Player_Pos: {r: 3.6763403, g: -8.187301, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
