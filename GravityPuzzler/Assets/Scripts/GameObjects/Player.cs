@@ -21,6 +21,10 @@ public class Player : GravityInfluenced {
     private Vector3 leftOffset;
     static Material colored;
 
+    bool xFlip = false;
+
+    float horizontalInput;
+
     [SerializeField]
     AudioClip _deathSound;
 
@@ -39,6 +43,7 @@ public class Player : GravityInfluenced {
     protected override void Update()
     {
         base.Update();
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (movementAllowed) {
             calculateMovement();
@@ -58,7 +63,7 @@ public class Player : GravityInfluenced {
 
     void calculateMovement()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        //float horizontalInput = Input.GetAxisRaw("Horizontal");
         bool hasInput = System.Math.Abs(horizontalInput) > 0.05f;
         if (hasInput) {
             Level.activeLevel.OnMovement();

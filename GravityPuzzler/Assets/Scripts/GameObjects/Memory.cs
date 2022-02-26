@@ -10,6 +10,7 @@ public class Memory : MonoBehaviour {
     [SerializeField]
     Color _color = Color.green;
 
+
     static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
     public static Sprite LoadSprite(string name)
     {
@@ -50,6 +51,7 @@ public class Memory : MonoBehaviour {
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             collider.enabled = false;
             Level.activeLevel.onMemoryKilled();
+
             //TODO: play death animation
             Destroy(gameObject);
         }
@@ -66,6 +68,7 @@ public class Memory : MonoBehaviour {
             _deathTime = Time.timeSinceLevelLoad;
             Destroy(GetComponentInChildren<SpriteRenderer>());
             Destroy(GetComponent<BoxCollider2D>());
+            Destroy(gameObject);
         }
     }
 }

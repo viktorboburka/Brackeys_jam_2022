@@ -17,6 +17,11 @@ public class Level : MonoBehaviour {
         private set;
     }
 
+    [SerializeField]
+    AudioClip _memoryKilled;
+    [SerializeField]
+    AudioClip _memorySaved;
+
     #region memory-related bookkeeping
     public class SavedMemory {
         public Color color;
@@ -35,6 +40,9 @@ public class Level : MonoBehaviour {
         if (state > State.RUNNING) return;
         savedMemories.Add(new SavedMemory(color, sprite));
         reduceRemainingMemories();
+
+        GetComponent<AudioSource>().clip = _memorySaved;
+        GetComponent<AudioSource>().Play();
     }
 
     public int memoriesLeft {
@@ -50,6 +58,9 @@ public class Level : MonoBehaviour {
         // do not change stats after game over
         if (state > State.RUNNING) return;
         reduceRemainingMemories();
+
+        GetComponent<AudioSource>().clip = _memoryKilled;
+        GetComponent<AudioSource>().Play();
     }
     private void reduceRemainingMemories()
     {
@@ -122,6 +133,7 @@ public class Level : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
     }
+
 
     public void OnMovement()
     {

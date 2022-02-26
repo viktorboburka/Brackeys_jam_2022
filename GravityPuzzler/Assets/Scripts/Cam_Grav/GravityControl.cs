@@ -82,6 +82,9 @@ public class GravityControl : MonoBehaviour {
             if (_killerObjects != null) {
                 setKillerObjectVelocityZero();
             }
+            if (GetComponent<AudioSource>()) {
+                GetComponent<AudioSource>().Play();
+            }
         }
     }
 

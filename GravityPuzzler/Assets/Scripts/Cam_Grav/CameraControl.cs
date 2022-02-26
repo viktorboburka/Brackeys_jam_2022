@@ -9,6 +9,14 @@ public class CameraControl : MonoBehaviour {
     private float _rotationSpeed = 0.1f;
     private float _rotationChangedTime = 0.0f;
 
+    [SerializeField]
+    private bool _playIntro = false;
+    float zoom;
+    float targetZoom = 1f;
+    Camera cam;
+    float zoomTime = Mathf.Infinity;
+    float zoomSpeed = 0.1f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +24,30 @@ public class CameraControl : MonoBehaviour {
         _currentRotation = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
         _targetRotation = _currentRotation;
         _rotationSpeed = 0.1f;
+        cam = Camera.main;
+        zoom = cam.orthographicSize;
+        Debug.Log("zoom: " + zoom);
     }
 
     // Update is called once per frame
     void Update()
     {
         smoothRotate();
-        
+        if (_playIntro) {
+            zoomIn();
+        }
+    }
+
+    void zoomIn() {
+        if (zoomTime == Mathf.Infinity) {
+            zoomTime = Time.timeSinceLevelLoad;
+        }
+        if (zoom != targetZoom) {
+            Debug.Log("zoom: " + zoom + " target zoom: " + targetZoom + "zoomspeed * ...: " + zoomSpeed * (Time.timeSinceLevelLoad - zoomTime));
+            float newZoom = Mathf.Lerp(zoom, targetZoom, zoomSpeed * (Time.timeSinceLevelLoad - zoomTime));
+            //Debug.Log("zooming to: " + zoom + " target: " + targetZoom);
+            cam.orthographicSize = newZoom;
+        }
     }
 
     public void setTargetRotation(GravityControl.GravityDirection target) {

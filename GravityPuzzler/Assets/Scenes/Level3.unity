@@ -590,6 +590,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1739803940080979808, guid: 59e1d5132975d412cae2646b2c59fe9b, type: 3}
+      propertyPath: _timeline.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739803940080979808, guid: 59e1d5132975d412cae2646b2c59fe9b, type: 3}
       propertyPath: _timeline.Array.data[2].duration
       value: 8
       objectReference: {fileID: 0}
