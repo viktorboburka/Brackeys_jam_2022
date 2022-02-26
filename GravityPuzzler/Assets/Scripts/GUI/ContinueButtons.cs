@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class ContinueButtons : MonoBehaviour {
         var highScores = PersistentData.Instance.highScores;
         var prefab = Resources.Load<GameObject>("Load Level");
 
-        for (var i = 0; i < lastLevel; ++i) {
+        for (var i = 0; i < Math.Min(lastLevel, SceneManager.sceneCountInBuildSettings - 1); ++i) {
             var obj = Instantiate(prefab, transform);
             var text = obj.transform.GetComponentInChildren<Text>();
             text.text = $"Night {i + 1}";
@@ -27,9 +28,4 @@ public class ContinueButtons : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
