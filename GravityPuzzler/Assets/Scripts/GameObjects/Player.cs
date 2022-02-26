@@ -189,7 +189,7 @@ public class Player : GravityInfluenced {
                 //rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 rb.drag = 1f;
                 rb.angularDrag = 1f;
-                sprite.gameObject.AddComponent<PolygonCollider2D>();
+                sprite.gameObject.AddComponent<CapsuleCollider2D>();
                 sprite.gameObject.AddComponent<GravityInfluenced>();
                 var skin = sprite.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteSkin>();
                 if (skin != null) Destroy(skin);
