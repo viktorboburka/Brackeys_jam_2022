@@ -186,7 +186,7 @@ public class Player : GravityInfluenced {
                 if (rb == null) {
                     continue;
                 }
-                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                //rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 rb.drag = 1f;
                 rb.angularDrag = 1f;
                 sprite.gameObject.AddComponent<PolygonCollider2D>();
@@ -197,6 +197,7 @@ public class Player : GravityInfluenced {
                 const float torque = 100f;
                 rb.AddTorque(Random.Range(-torque, torque));
             }
+            Destroy(GetComponent<CapsuleCollider2D>());
             Destroy(GetComponent<BoxCollider2D>());
             Destroy(GetComponent<Rigidbody2D>());
             Destroy(this);
