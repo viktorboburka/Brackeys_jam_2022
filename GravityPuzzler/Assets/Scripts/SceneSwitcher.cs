@@ -27,16 +27,6 @@ public class SceneSwitcher : MonoBehaviour {
         if (isEndScreen && Input.GetKey(KeyCode.M)) {
             SceneManager.LoadScene(0);
         }
-        if (isEndScreen && Input.GetKey(KeyCode.Return)) {
-            Scene scene = SceneManager.GetActiveScene();
-            int index = scene.buildIndex;
-            int nextScene = index + 1;
-            if (nextScene >= sceneCount) {
-                return;
-            } else {
-                SceneManager.LoadScene(nextScene);
-            }
-        }
 
         if (state == Level.State.WON && Input.GetKey(KeyCode.Return)) {
             Scene scene = SceneManager.GetActiveScene();
