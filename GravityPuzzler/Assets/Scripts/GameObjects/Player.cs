@@ -183,6 +183,9 @@ public class Player : GravityInfluenced {
             var sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var sprite in sprites) {
                 var rb = sprite.gameObject.AddComponent<Rigidbody2D>();
+                if (rb == null) {
+                    continue;
+                }
                 rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 rb.drag = 1f;
                 rb.angularDrag = 1f;

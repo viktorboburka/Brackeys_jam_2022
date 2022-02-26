@@ -44,13 +44,13 @@ public class GravityControl : MonoBehaviour {
 
         _killerObjects = new List<GameObject>();
         GameObject[] killerEverything = GameObject.FindGameObjectsWithTag("KillerPlatform");
-        Debug.Log("killer everything count: " + killerEverything.Length);
+        //Debug.Log("killer everything count: " + killerEverything.Length);
         foreach (GameObject go in killerEverything) {
             if (go.GetComponent<GravityInfluenced>() != null) {
                 _killerObjects.Add(go);
             }
         }
-        Debug.Log("killer objects count: " + _killerObjects.Count);
+        //Debug.Log("killer objects count: " + _killerObjects.Count);
     }
 
     // Update is called once per frame
