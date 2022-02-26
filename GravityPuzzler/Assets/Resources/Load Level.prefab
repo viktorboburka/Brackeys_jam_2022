@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Level 1
+  m_Text: Night 6
 --- !u!1 &1990169389283005893
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +339,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 130, y: 100}
+  m_SizeDelta: {x: 140, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6650797368730162448
 CanvasRenderer:
@@ -491,4 +491,3 @@ MonoBehaviour:
   - {fileID: 5795207966438953323}
   - {fileID: 1990169389283005893}
   - {fileID: 4930564690543006231}
-  sprite: {fileID: 21300000, guid: 2c2bd15b0467f8a4c9c1e312c5c4f319, type: 3}

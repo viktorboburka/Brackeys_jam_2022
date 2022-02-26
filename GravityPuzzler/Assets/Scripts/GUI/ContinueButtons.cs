@@ -15,7 +15,7 @@ public class ContinueButtons : MonoBehaviour {
         for (var i = 0; i < lastLevel; ++i) {
             var obj = Instantiate(prefab, transform);
             var text = obj.transform.GetComponentInChildren<Text>();
-            text.text = $"Level {i + 1}";
+            text.text = $"Night {i + 1}";
             var loader = obj.GetComponent<LoadScene>();
             loader.scene = i + 1;
             if (highScores != null) {
