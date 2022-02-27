@@ -25,6 +25,8 @@ public class Player : GravityInfluenced {
 
     [SerializeField]
     AudioClip _deathSound;
+    [SerializeField]
+    AudioClip _fallSound;
 
     void Start()
     {
@@ -49,6 +51,7 @@ public class Player : GravityInfluenced {
         colored.SetVector("_Player_Pos", _colorSource.transform.position);
     }
 
+    float lastOnGround = 0;
     bool isOnGround()
     {
 
@@ -68,6 +71,12 @@ public class Player : GravityInfluenced {
         }
 
         var hit = isOnGround();
+        if (hit && Time.timeSinceLevelLoad - lastOnGround > 0.2f) {
+            GetComponent<AudioSource>().PlayOneShot(_fallSound);
+        }
+        if (hit) {
+            lastOnGround = Time.timeSinceLevelLoad;
+        }
         //Debug.Log(horizontalInput);
 
         animator.SetBool("walking", hit && hasInput);
@@ -185,8 +194,7 @@ public class Player : GravityInfluenced {
             Level.activeLevel.killPlayer();
             GetComponent<Rigidbody2D>().sharedMaterial = _deadMaterial;
             GetComponent<Rigidbody2D>().freezeRotation = false;
-            GetComponent<AudioSource>().clip = _deathSound;
-            GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().PlayOneShot(_deathSound);
 
             var sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var sprite in sprites) {
