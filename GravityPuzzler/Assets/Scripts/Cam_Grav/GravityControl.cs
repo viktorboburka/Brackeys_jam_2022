@@ -40,7 +40,7 @@ public class GravityControl : MonoBehaviour {
         cameraControl = Camera.main.GetComponent<CameraControl>();//GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         initGravity();
-        changeGravity(_timeline[0].direction);
+        changeGravity(_timeline[0].direction, true);
 
         _killerObjects = new List<GameObject>();
         GameObject[] killerEverything = GameObject.FindGameObjectsWithTag("KillerPlatform");
@@ -62,8 +62,7 @@ public class GravityControl : MonoBehaviour {
     void triggerTimedGravityChanges()
     {
         timeSinceLast += Time.deltaTime;
-        if (_timeline[timelineIndex].duration < timeSinceLast)
-        {
+        if (_timeline[timelineIndex].duration < timeSinceLast) {
             timeSinceLast -= _timeline[timelineIndex].duration;
             timelineIndex = (timelineIndex + 1) % _timeline.Count;
             changeGravity(_timeline[timelineIndex].direction);
@@ -71,10 +70,9 @@ public class GravityControl : MonoBehaviour {
     }
 
 
-    private void changeGravity(GravityDirection changeTo)
+    private void changeGravity(GravityDirection changeTo, bool initial = false)
     {
-        if (_gravityVectors.TryGetValue(changeTo, out var newGravity))
-        {
+        if (_gravityVectors.TryGetValue(changeTo, out var newGravity)) {
             Physics2D.gravity = newGravity * _gravityScale;
             cameraControl.setTargetRotation(changeTo);
             player.changeDirection(_timeline[timelineIndex].direction);
@@ -82,19 +80,20 @@ public class GravityControl : MonoBehaviour {
             if (_killerObjects != null) {
                 setKillerObjectVelocityZero();
             }
-            if (GetComponent<AudioSource>()) {
-                GetComponent<AudioSource>().Play();
+            if (!initial) {
+                GetComponent<AudioSource>()?.Play();
             }
         }
     }
 
-    void setKillerObjectVelocityZero() {
-        foreach(GameObject go in _killerObjects) {
+    void setKillerObjectVelocityZero()
+    {
+        foreach (GameObject go in _killerObjects) {
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null) {
                 continue;
             }
-            rb.velocity = new Vector2(0,0);
+            rb.velocity = new Vector2(0, 0);
         }
     }
 
@@ -109,8 +108,7 @@ public class GravityControl : MonoBehaviour {
         _gravityVectors.Add(GravityDirection.RIGHT, new Vector2(9.8f, 0.0f));
 
         GameObject[] allRigidBodyObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
-        foreach (GameObject go in allRigidBodyObjects)
-        {
+        foreach (GameObject go in allRigidBodyObjects) {
             //Debug.Log(go.ToString());
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null) continue;

@@ -21,8 +21,6 @@ public class Player : GravityInfluenced {
     private Vector3 leftOffset;
     static Material colored;
 
-    bool xFlip = false;
-
     float horizontalInput;
 
     [SerializeField]

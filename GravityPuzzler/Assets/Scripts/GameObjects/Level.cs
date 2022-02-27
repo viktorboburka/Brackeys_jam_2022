@@ -49,11 +49,9 @@ public class Level : MonoBehaviour {
     {
         // do not change stats after game over
         if (state > State.RUNNING) return;
+        GetComponent<AudioSource>().PlayOneShot(_memorySaved);
         savedMemories.Add(new SavedMemory(color, sprite));
         reduceRemainingMemories();
-
-        GetComponent<AudioSource>().clip = _memorySaved;
-        GetComponent<AudioSource>().Play();
     }
 
     public int memoriesLeft {
@@ -68,10 +66,8 @@ public class Level : MonoBehaviour {
     {
         // do not change stats after game over
         if (state > State.RUNNING) return;
+        GetComponent<AudioSource>().PlayOneShot(_memoryKilled);
         reduceRemainingMemories();
-
-        GetComponent<AudioSource>().clip = _memoryKilled;
-        GetComponent<AudioSource>().Play();
     }
     private void reduceRemainingMemories()
     {
