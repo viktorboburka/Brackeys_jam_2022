@@ -6,18 +6,28 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour {
     private int sceneCount;
+    static int reloadedFrom = -1;
+    [SerializeField]
+    Animator _sleepingAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
         sceneCount = SceneManager.sceneCountInBuildSettings;
+        if (SceneManager.GetActiveScene().buildIndex == reloadedFrom) {
+            _sleepingAnimator.SetBool("start", true);
+            _sleepingAnimator.speed = 1.75f;
+        }
+        reloadedFrom = -1;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            var activeScene = SceneManager.GetActiveScene();
+            reloadedFrom = activeScene.buildIndex;
+            SceneManager.LoadScene(activeScene.name);
         }
         /*if (player.getTimeOfDeath() > Time.timeSinceLevelLoad + 3f)
         {

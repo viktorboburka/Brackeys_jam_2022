@@ -405,6 +405,10 @@ PrefabInstance:
       propertyPath: _timeline.Array.data[0].duration
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 2027620977242035146, guid: 59e1d5132975d412cae2646b2c59fe9b, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2651239269662268333, guid: 59e1d5132975d412cae2646b2c59fe9b, type: 3}
       propertyPath: m_RootOrder
       value: 0
