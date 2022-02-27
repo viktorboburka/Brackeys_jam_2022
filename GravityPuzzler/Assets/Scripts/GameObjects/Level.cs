@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class Level : MonoBehaviour {
+
+    public static readonly List<string> scenePaths = new List<string>{
+        "Assets/Scenes/Level1.unity",
+        "Assets/Scenes/Level1.5.unity",
+        "Assets/Scenes/Level2.unity",
+        "Assets/Scenes/Level3.unity",
+        "Assets/Scenes/Level4.unity",
+        "Assets/Scenes/Level5.unity",
+    };
+
+
     public enum State {
         INIT = 0, // before first input
         PAUSED = 1,
@@ -75,8 +86,7 @@ public class Level : MonoBehaviour {
                 state = State.WON;
                 PersistentData.Update(data => {
                     var scene = SceneManager.GetActiveScene();
-                    Debug.Log($"scene: {scene.path} ({scene.buildIndex})");
-                    data.lastLevel = System.Math.Max(scene.buildIndex + 1, data.lastLevel);
+                    Debug.Log($"scene: {scene.path}");
                     if (data.highScores == null) data.highScores = new Dictionary<string, PersistentData.Score[]>();
                     var score = savedMemories.Select(v => new PersistentData.Score(v.color, v.sprite.name)).ToArray();
                     Debug.Log($"{score.Length}");

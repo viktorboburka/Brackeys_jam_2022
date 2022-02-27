@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class ButtonEventsManager : MonoBehaviour {
     void Start()
     {
-        if (PersistentData.Instance.lastLevel < 1) {
-            SceneManager.LoadScene(1);
+        if (PersistentData.Instance.highScores.Count < 1) {
+            SceneManager.LoadScene(Level.scenePaths[0]);
         }
     }
 

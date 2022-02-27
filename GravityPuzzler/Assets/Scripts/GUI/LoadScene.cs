@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 
 public class LoadScene : MonoBehaviour {
-    public int scene;
+    public string scenePath;
     [SerializeField]
     private List<GameObject> _memories = new List<GameObject>();
 
@@ -19,7 +19,7 @@ public class LoadScene : MonoBehaviour {
 
     void OnClick()
     {
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(scenePath);
     }
 
     public void UpdateMemories(PersistentData.Score[] savedMemories)

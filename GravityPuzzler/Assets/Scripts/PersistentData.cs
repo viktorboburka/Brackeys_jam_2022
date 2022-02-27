@@ -17,7 +17,6 @@ using UnityEngine;
  * Adding new fields: just add a public member at the start.
  */
 public sealed class PersistentData {
-    public int lastLevel;
     public class PersistableColor {
         public float r, g, b, a;
         public Color ToColor() { return new Color(r, g, b, a); }

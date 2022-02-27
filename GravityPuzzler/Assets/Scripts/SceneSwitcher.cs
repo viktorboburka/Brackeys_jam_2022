@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour {
@@ -30,12 +31,15 @@ public class SceneSwitcher : MonoBehaviour {
 
         if (state == Level.State.WON && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return))) {
             Scene scene = SceneManager.GetActiveScene();
-            int index = scene.buildIndex;
-            int nextScene = index + 1;
-            if (nextScene >= sceneCount) {
+            int index = Level.scenePaths.IndexOf(scene.path);
+            if (index < 0) {
+                Debug.LogError("Can't find current scene in level list");
                 return;
+            }
+            if (index + 1 < Level.scenePaths.Count) {
+                SceneManager.LoadScene(Level.scenePaths[index + 1]);
             } else {
-                SceneManager.LoadScene(nextScene);
+                SceneManager.LoadScene(0);
             }
         }
     }

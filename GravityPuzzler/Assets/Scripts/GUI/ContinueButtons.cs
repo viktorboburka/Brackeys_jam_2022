@@ -9,22 +9,22 @@ public class ContinueButtons : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        var lastLevel = PersistentData.Instance.lastLevel;
         var highScores = PersistentData.Instance.highScores;
+        if (highScores == null) return;
         var prefab = Resources.Load<GameObject>("Load Level");
 
-        for (var i = 0; i < Math.Min(lastLevel, SceneManager.sceneCountInBuildSettings - 1); ++i) {
+        int i = 0;
+        foreach (var path in Level.scenePaths) {
+            ++i;
             var obj = Instantiate(prefab, transform);
             var text = obj.transform.GetComponentInChildren<Text>();
-            text.text = $"Night {i + 1}";
+            text.text = $"Night {i}";
             var loader = obj.GetComponent<LoadScene>();
-            loader.scene = i + 1;
-            if (highScores != null) {
-                var scene = SceneUtility.GetScenePathByBuildIndex(i + 1);
-                Debug.Log($"Scene: \"{scene}\" i: {i + 1}");
-                if (highScores.TryGetValue(scene, out var highscore))
-                    loader.UpdateMemories(highscore);
-            }
+            loader.scenePath = path;
+            if (highScores.TryGetValue(path, out var highscore))
+                loader.UpdateMemories(highscore);
+            else
+                return;
         }
     }
 
