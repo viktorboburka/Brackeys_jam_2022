@@ -160,6 +160,15 @@ public class Level : MonoBehaviour {
     void OnDisable()
     {
         _activeLevel = null;
+
+#if UNITY_EDITOR
+        // this cleanup is not strictly necessary but prevents trashing git history
+        var colored = Resources.Load<Material>("Colored");
+        colored.SetColor("_Color_Outside", Color.white);
+        colored.SetColor("_Color", Color.white);
+        colored.SetFloat("_Animate", 0f);
+        colored.SetVector("_Player_Pos", Vector3.zero);
+#endif
     }
     #endregion
 }
