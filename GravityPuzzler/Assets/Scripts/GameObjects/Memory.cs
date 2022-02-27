@@ -66,9 +66,11 @@ public class Memory : MonoBehaviour {
             colored.SetColor("_Color", _color);
 
             _deathTime = Time.timeSinceLevelLoad;
+            // NOTE: do not destroy the game object - its needed for coloring
+            // the player. But do destroy anything visible.
             Destroy(GetComponentInChildren<SpriteRenderer>());
             Destroy(GetComponent<BoxCollider2D>());
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
