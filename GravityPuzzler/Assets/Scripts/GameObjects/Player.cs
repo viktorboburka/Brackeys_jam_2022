@@ -68,6 +68,7 @@ public class Player : GravityInfluenced {
         bool hasInput = System.Math.Abs(horizontalInput) > 0.05f;
         if (hasInput) {
             Level.activeLevel.OnMovement();
+            animator.SetBool("flip", horizontalInput > 0);
         }
 
         var hit = isOnGround();
